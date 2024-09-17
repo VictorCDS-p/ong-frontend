@@ -1,0 +1,27 @@
+/* buttonStyle.css */
+
+.custom-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+.custom-button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.custom-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

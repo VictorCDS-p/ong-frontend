@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getONGs } from '../services/ongService';
+import { getONGs } from '../../services/ongService';
+import "./style.css";
 
 function ONGList() {
     const [ongs, setONGs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    console.log(ongs);
 
     useEffect(() => {
         const fetchONGs = async () => {
@@ -20,6 +20,10 @@ function ONGList() {
         }
         fetchONGs();
     }, []);
+
+    const formatURL = (url) => {
+        return /^https?:\/\//i.test(url) ? url : `http://${url}`;
+    };
 
     if (loading) {
         return <div>Carregando ONGs...</div>;
@@ -37,7 +41,7 @@ function ONGList() {
                     <h2>{ong.name}</h2>
                     <p>{ong.description}</p>
                     <p>{ong.location}</p>
-                    <a href={ong.website} target="_blank" rel="noopener noreferrer">
+                    <a href={formatURL(ong.website)} target="_blank" rel="noopener noreferrer">
                         Visitar site
                     </a>
                 </div>

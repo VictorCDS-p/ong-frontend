@@ -16,7 +16,7 @@ export const getONGById = async (id) => {
         const response = await axios.get(`${API_URL}/ong/${id}`);
         return response.data;
     } catch (error) {
-        throw new Error('Erro ao buscar a ONG: ' + error.message);
+        throw new Error("Erro ao buscar a ONG: " + error.message);
     }
 };
 
@@ -25,7 +25,7 @@ export const createONG = async (data) => {
         const response = await axios.post(`${API_URL}/ong`, data);
         return response.data;
     } catch (error) {
-        throw new Error('Erro ao buscar a ONG: ' + error.message);
+        throw new Error("Erro ao buscar a ONG: " + error.message);
 
     }
 };
@@ -35,7 +35,7 @@ export const updateONG = async (id, data) => {
         const response = await axios.put(`${API_URL}/ong/${id}`, data);
         return response.data;
     } catch (error) {
-        throw new Error('Erro ao buscar a ONG: ' + error.message);
+        throw new Error("Erro ao buscar a ONG: " + error.message);
     }
 };
 
@@ -44,6 +44,6 @@ export const deleteONG = async (id) => {
         const response = await axios.delete(`${API_URL}/ong/${id}`);
         return response.data;
     } catch (error) {
-        throw new Error('Erro ao deletar ONG: ' + error.message);
+        throw new Error("Erro ao deletar ONG: " + error.message);
     }
 };
