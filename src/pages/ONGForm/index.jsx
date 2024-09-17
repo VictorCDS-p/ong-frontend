@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { createONG } from "../../services/ongService";
 import "./style.css";
-import InputField from "../InputField";
-import Button from "../buttom";
+import InputField from "../../components/InputField";
+import Button from "../../components/buttom";
 
 
 function ONGForm() {
