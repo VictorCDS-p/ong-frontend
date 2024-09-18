@@ -1,7 +1,12 @@
 import "./style.css";
 import Header from "../../components/header";
 import Button from "../../components/buttom";
+import Card from "../../components/card";
+import Footer from "../../components/footer";
+
 import { useRef } from 'react';
+
+
 
 export default function Home() {
     const scrollRef = useRef(null);
@@ -29,7 +34,7 @@ export default function Home() {
                 </div>
 
                 <div className="imageContent">
-                    <img src="src\assets\worldDogs-2-removebg-preview.png" alt="" />
+                    <img src="src\assets\kisspng-volunteering-clip-art-volunteer-5ac22caac1ba33.9703998215226748587935.png" alt="" />
                 </div>
             </div>
 
@@ -47,6 +52,39 @@ export default function Home() {
                 <p>
                     Nosso sistema permite que você gerencie suas inscrições, acompanhe seu impacto e receba feedback das ONGs. Queremos tornar o processo de voluntariado acessível e eficiente, criando uma ponte entre pessoas e organizações, e, assim, ajudar a construir um mundo melhor para todos.
                 </p>
+            </div>
+
+            <div className="cardsContainer">
+
+                <div className="title">
+                    <h1>Conheça Nossos Recursos</h1>
+                </div>
+
+
+                <div className="cardsContent">                <Card
+                    image="https://img.icons8.com/cotton/64/trust--v4.png"
+                    subtitle="ONGs"
+                    description="Explore uma variedade de ONGs dedicadas a diferentes causas sociais. Descubra como você pode apoiar e contribuir para projetos que fazem a diferença em áreas como educação, meio ambiente e saúde."
+                    buttom="Saiba mais"
+                />
+                    <Card
+                        image="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-volunteer-isolation-flaticons-flat-flat-icons.png"
+                        subtitle="Voluntários"
+                        description="Conecte-se com voluntários que estão engajados em causas importantes. Encontre perfis de pessoas comprometidas em fazer a diferença e veja como você pode se envolver em atividades de voluntariado."
+                        buttom="Saiba mais"
+                    />
+                    <Card
+                        image="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-jobs-digital-nomading-relocation-flaticons-flat-flat-icons.png"
+                        subtitle="Oportunidade"
+                        description="Encontre oportunidades de voluntariado em várias áreas e locais. Descubra projetos que precisam de sua ajuda e participe de iniciativas que ressoam com seus interesses e habilidades."
+                        buttom="Saiba mais"
+                    />
+                </div>
+
+            </div>
+
+            <div className="footer">
+                <Footer/>
             </div>
         </>
     );

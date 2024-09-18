@@ -1,0 +1,40 @@
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    margin: 16px;
+    padding: 10px;
+}
+
+.cardImage {
+    width: 125px;
+    height: auto;
+    margin-bottom: 20px;
+
+}
+
+.cardContent {
+    padding: 16px;
+}
+
+.cardContent h3, p, button{
+    padding-bottom: 20px;
+}
+
+.cardSubtitle {
+    font-size: 1.25em;
+    margin: 0 0 8px;
+    color: #333;
+}
+
+.cardDescription {
+    font-size: 1em;
+    margin: 0;
+    color: #666;
+}
