@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'MinhaFontePersonalizada';
+    src: url('./assets/fonts/Sultan bold.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SultanBold', sans-serif; 
+}
+

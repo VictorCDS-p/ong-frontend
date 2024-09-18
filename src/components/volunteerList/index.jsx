@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getVolunteers } from '../../services/volunteerService';
 import "./style.css";
 
-function VolunteerList() {
+export default function VolunteerList() {
     const [volunteers, setVolunteers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,4 +44,4 @@ function VolunteerList() {
     );
 }
 
-export default VolunteerList;
+

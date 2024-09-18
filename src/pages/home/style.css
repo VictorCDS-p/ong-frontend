@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+
+}
+
+.mainContent {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+
+.textContent {
+    padding: 100px; 
+    max-width: 650px
+
+}
+
+.textContent, h1, p, li{
+    text-align: left;
+}
+
+.textContent h1 {
+    margin-bottom: 20px; 
+    font-size: 36px;
+    color: #5b8284;
+}
+
+.textContent p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.6; 
+    color: #666;
+}
+
+.textContent ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.textContent li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+.textContent li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #fbb646;
+    border-radius: 50%;
+}
+
+.textContent button {
+    display: inline-block;
+    margin-top: 20px; 
+    margin-left: 20px;
+}
+
+.mainContent .imageContent img{
+    width: 120vh;
+    margin-right: 50px;
+    
+}
+
+.infoSection {
+    padding: 100px 20px; 
+    min-height: 100vh; 
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+}
+
+.infoSection h2 {
+    margin-bottom: 20px; 
+    font-size: 36px; 
+    color: #5b8284;
+}
+
+.infoSection p {
+    margin-bottom: 20px;
+    font-size: 20px; 
+    line-height: 1.8; 
+    color: #666;
+}
+
+.infoSection p:last-child {
+    margin-bottom: 0;
+}

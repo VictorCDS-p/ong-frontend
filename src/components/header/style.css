@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'MinhaFontePersonalizada';
+    src: url('./assets/fonts/Sultan bold.ttf') format('truetype');
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    color: #333;
+    padding: 10px 20px;
+}
+
+.interface {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 70px;
+    margin-left: 100px;
+}
+
+.menu-desktop ul {
+    list-style: none;
+    margin: 45px;
+    padding: 0;
+    gap: 50px;
+    display: flex;
+}
+
+.menu-desktop li {
+    margin: 0 15px;
+}
+
+.menu-desktop a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.menu-desktop li:hover a {
+    text-decoration: underline;
+}

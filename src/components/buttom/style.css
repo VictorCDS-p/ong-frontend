@@ -1,17 +1,18 @@
 .custom-button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #fbb646;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 12px; /* Aumentado para deixar o botão mais arredondado */
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     display: inline-block;
 }
 
 .custom-button:hover {
-    background-color: #0056b3;
+    background-color: #f8a736;
+    transform: scale(1.05);
 }
 
 .custom-button:focus {

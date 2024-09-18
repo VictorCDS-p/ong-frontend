@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { createOpportunity } from '../../services/opportunityService';
 import "./style.css";
-import InputField from '../../components/InputField';
-import Button from '../../components/buttom';
+import InputField from '../InputField';
+import Button from '../buttom';
 
-function OpportunityForm() {
+export default function OpportunityForm() {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -42,4 +42,4 @@ function OpportunityForm() {
     );
 }
 
-export default OpportunityForm;
+

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getONGs } from '../../services/ongService';
 import "./style.css";
 
-function ONGList() {
+export default function ONGList() {
     const [ongs, setONGs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -50,6 +50,5 @@ function ONGList() {
     )
 }
 
-export default ONGList;
 
 

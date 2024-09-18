@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { createVolunteer } from '../../services/volunteerService';
 import "./style.css";
-import InputField from '../../components/InputField';
-import Button from '../../components/buttom';
+import InputField from '../InputField';
+import Button from '../buttom';
 
-function VolunteerForm() {
+export default function VolunteerForm() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -38,4 +38,3 @@ function VolunteerForm() {
     );
 }
 
-export default VolunteerForm;

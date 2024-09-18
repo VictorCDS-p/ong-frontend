@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getOpportunities } from '../../services/opportunityService';
 import "./style.css";
 
-function OpportunityList() {
+export default function OpportunityList() {
     const [opportunities, setOpportunities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -46,4 +46,4 @@ function OpportunityList() {
     );
 }
 
-export default OpportunityList;
+

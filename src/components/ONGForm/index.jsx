@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { createONG } from "../../services/ongService";
 import "./style.css";
-import InputField from "../../components/InputField";
-import Button from "../../components/buttom";
+import InputField from "../InputField";
+import Button from "../buttom";
 
 
-function ONGForm() {
+export default function ONGForm() {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -43,4 +43,3 @@ function ONGForm() {
     </>
   )
 }
-export default ONGForm;
