@@ -3,7 +3,7 @@
     background-color: #fbb646;
     color: white;
     border: none;
-    border-radius: 12px; /* Aumentado para deixar o botão mais arredondado */
+    border-radius: 12px; 
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
