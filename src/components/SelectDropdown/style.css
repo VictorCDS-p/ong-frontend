@@ -1,0 +1,41 @@
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.selectContainer label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.selectContainer select {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    appearance: none; /* Remove o estilo padrão de dropdown */
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.selectContainer select:focus {
+    border-color: #007BFF; /* Cor de borda quando focado */
+    outline: none;
+}
+
+.selectContainer select:hover {
+    border-color: #0056b3; /* Cor de borda ao passar o mouse */
+}
+
+.selectContainer select:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+.selectContainer select option {
+    padding: 10px;
+}

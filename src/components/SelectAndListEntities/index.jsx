@@ -1,9 +1,7 @@
-import "./style.css";
 import React, { useState, useEffect } from 'react';
-
-import { getONGs } from '../../services/ongService';
-import { getOpportunities } from '../../services/opportunityService';
-import { getVolunteers } from '../../services/volunteerService';
+import { getONGs, updateONG } from '../../services/ongService';
+import { getOpportunities, updateOpportunity } from '../../services/opportunityService';
+import { getVolunteers, updateVolunteer } from '../../services/volunteerService';
 import InputField from '../../components/InputField';
 import Button from '../button';
 
@@ -13,18 +11,23 @@ export default function ListEntities() {
     const [editData, setEditData] = useState(null);
 
     const fetchData = async (entityType) => {
-        let data = [];
-        if (entityType === 'ongs') {
-            const response = await getONGs();
-            data = response.ongList || [];
-        } else if (entityType === 'opportunities') {
-            const response = await getOpportunities();
-            data = response.opportunityList || [];
-        } else if (entityType === 'volunteers') {
-            const response = await getVolunteers();
-            data = response.volunteerList || [];
+        try {
+            let data = [];
+            if (entityType === 'ongs') {
+                const response = await getONGs();
+                data = response.ongList || [];
+            } else if (entityType === 'opportunities') {
+                const response = await getOpportunities();
+                data = response.opportunities || [];
+            } else if (entityType === 'volunteers') {
+                const response = await getVolunteers();
+                data = response.volunteers || [];
+            }
+            console.log(`Dados recebidos para ${entityType}:`, data);
+            setEntities(data);
+        } catch (error) {
+            console.error(`Erro ao buscar ${entityType}:`, error.message);
         }
-        setEntities(data);
     };
 
     useEffect(() => {
@@ -39,7 +42,38 @@ export default function ListEntities() {
     };
 
     const handleEdit = (entity) => {
-        setEditData(entity);
+        setEditData({ ...entity }); // Cria uma cópia dos dados da entidade
+    };
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        if (!editData) return;
+
+        try {
+            let response;
+            if (selectedEntity === 'ongs') {
+                response = await updateONG(editData.id, {
+                    name: editData.name,
+                    description: editData.description,
+                });
+            } else if (selectedEntity === 'opportunities') {
+                response = await updateOpportunity(editData.id, {
+                    title: editData.title,
+                    description: editData.description,
+                });
+            } else if (selectedEntity === 'volunteers') {
+                response = await updateVolunteer(editData.id, {
+                    name: editData.name,
+                    description: editData.description,
+                });
+            }
+
+            console.log("Atualização bem-sucedida:", response);
+            fetchData(selectedEntity); // Recarrega os dados
+            setEditData(null); // Limpa os dados após a atualização
+        } catch (error) {
+            console.error("Erro ao atualizar:", error.message);
+        }
     };
 
     return (
@@ -61,21 +95,20 @@ export default function ListEntities() {
             </div>
 
             {editData && (
-                <form>
+                <form onSubmit={handleUpdate}>
                     <InputField
-                        name="name"
-                        value={editData.name || editData.title}
-                        onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                        name="title" // Altere para "title" para oportunidades
+                        value={editData.title || editData.name} // Exibe o título para oportunidades
+                        onChange={(e) => setEditData({ ...editData, title: e.target.value })}
                     />
                     <InputField
                         name="description"
                         value={editData.description}
                         onChange={(e) => setEditData({ ...editData, description: e.target.value })}
                     />
-                    <Button label="Atualizar" />
+                    <Button label="Atualizar" type="submit" />
                 </form>
             )}
         </>
     );
-
 }

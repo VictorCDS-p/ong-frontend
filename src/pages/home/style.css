@@ -178,3 +178,60 @@
 .cardButton:hover {
     background-color: #e0a93f;
 }
+
+.forms {
+    width: 100%;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.forms form {
+    width: 100%;
+    max-width: 600px;
+}
+
+.forms h2 {
+    font-size: 28px;
+    color: #5b8284;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.forms .inputField {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.forms .inputField:focus {
+    border-color: #5b8284;
+    outline: none;
+}
+
+.forms .button {
+    background-color: #fbb646;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.forms .button:hover {
+    background-color: #e0a93f;
+}

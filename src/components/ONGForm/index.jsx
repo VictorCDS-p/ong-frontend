@@ -32,6 +32,7 @@ export default function ONGForm() {
 
   return(
     <>
+    <div className="orgForm">
     <form onSubmit={handleSubmit}>
          <InputField name={"name"} value={formData.name} onChange={handleChange} placeholder={"Nome"} />
          <InputField name={"description"} value={formData.description} onChange={handleChange} placeholder={"Descrição"} />
@@ -40,6 +41,7 @@ export default function ONGForm() {
          <InputField name={"contactEmail"} value={formData.contactEmail} onChange={handleChange} placeholder={"Email de Contato"} />
          <Button label="Criar ONG" type="submit" />
     </form> 
+    </div>
     </>
   )
 }

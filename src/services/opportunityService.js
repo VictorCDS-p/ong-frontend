@@ -2,12 +2,16 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000";
 
+const handleError = (error, action) => {
+    throw new Error(`Erro ao ${action}: ${error.response?.data.message || error.message}`);
+};
+
 export const getOpportunities = async () => {
     try {
         const response = await axios.get(`${API_URL}/opportunity`);
         return response.data;
     } catch (error) {
-        throw new Error("Erro ao buscar as Oportunidades: " + error.message);
+        handleError(error, "buscar as Oportunidades");
     }
 };
 
@@ -16,7 +20,7 @@ export const getOpportunityById = async (id) => {
         const response = await axios.get(`${API_URL}/opportunity/${id}`);
         return response.data;
     } catch (error) {
-        throw new Error("Erro ao buscar a Oportunidade: " + error.message);
+        handleError(error, "buscar a Oportunidade");
     }
 };
 
@@ -25,7 +29,7 @@ export const createOpportunity = async (data) => {
         const response = await axios.post(`${API_URL}/opportunity`, data);
         return response.data;
     } catch (error) {
-        throw new Error("Erro ao criar a Oportunidade: " + error.message);
+        handleError(error, "criar a Oportunidade");
     }
 };
 
@@ -34,7 +38,7 @@ export const updateOpportunity = async (id, data) => {
         const response = await axios.put(`${API_URL}/opportunity/${id}`, data);
         return response.data;
     } catch (error) {
-        throw new Error("Erro ao atualizar a Oportunidade: " + error.message);
+        handleError(error, "atualizar a Oportunidade");
     }
 };
 
@@ -43,6 +47,6 @@ export const deleteOpportunity = async (id) => {
         const response = await axios.delete(`${API_URL}/opportunity/${id}`);
         return response.data;
     } catch (error) {
-        throw new Error("Erro ao deletar a Oportunidade: " + error.message);
+        handleError(error, "deletar a Oportunidade");
     }
 };
