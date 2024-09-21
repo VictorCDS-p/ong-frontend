@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getONGs, updateONG } from '../../services/ongService';
-import { getOpportunities, updateOpportunity } from '../../services/opportunityService';
-import { getVolunteers, updateVolunteer } from '../../services/volunteerService';
+import { getONGs, updateONG, deleteONG } from '../../services/ongService';
+import { getOpportunities, updateOpportunity, deleteOpportunity } from '../../services/opportunityService';
+import { getVolunteers, updateVolunteer, deleteVolunteer } from '../../services/volunteerService';
 import InputField from '../../components/InputField';
 import Button from '../button';
 
@@ -76,6 +76,24 @@ export default function ListEntities() {
         }
     };
 
+    const handleDelete = async (id) => {
+        try {
+            let response;
+            if (selectedEntity === 'ongs') {
+                response = await deleteONG(id);
+            } else if (selectedEntity === 'opportunities') {
+                response = await deleteOpportunity(id);
+            } else if (selectedEntity === 'volunteers') {
+                response = await deleteVolunteer(id);
+            }
+
+            console.log("Remoção bem-sucedida:", response);
+            fetchData(selectedEntity); // Recarrega os dados
+        } catch (error) {
+            console.error("Erro ao remover:", error.message);
+        }
+    };
+
     return (
         <>
             <select value={selectedEntity} onChange={handleSelectChange}>
@@ -90,6 +108,7 @@ export default function ListEntities() {
                     <div key={entity.id}>
                         <h2>{entity.name || entity.title}</h2>
                         <button onClick={() => handleEdit(entity)}>Editar</button>
+                        <button onClick={() => handleDelete(entity.id)}>Remover</button>
                     </div>
                 ))}
             </div>
@@ -97,8 +116,8 @@ export default function ListEntities() {
             {editData && (
                 <form onSubmit={handleUpdate}>
                     <InputField
-                        name={selectedEntity === 'opportunities' ? "title" : "name"} // Altera para "title" ou "name" conforme a entidade
-                        value={selectedEntity === 'opportunities' ? editData.title : editData.name} // Exibe o título ou nome correto
+                        name={selectedEntity === 'opportunities' ? "title" : "name"}
+                        value={selectedEntity === 'opportunities' ? editData.title : editData.name}
                         onChange={(e) => setEditData({ ...editData, [selectedEntity === 'opportunities' ? 'title' : 'name']: e.target.value })}
                     />
                     <InputField
