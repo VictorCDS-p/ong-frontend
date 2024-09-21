@@ -97,9 +97,9 @@ export default function ListEntities() {
             {editData && (
                 <form onSubmit={handleUpdate}>
                     <InputField
-                        name="title" // Altere para "title" para oportunidades
-                        value={editData.title || editData.name} // Exibe o título para oportunidades
-                        onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                        name={selectedEntity === 'opportunities' ? "title" : "name"} // Altera para "title" ou "name" conforme a entidade
+                        value={selectedEntity === 'opportunities' ? editData.title : editData.name} // Exibe o título ou nome correto
+                        onChange={(e) => setEditData({ ...editData, [selectedEntity === 'opportunities' ? 'title' : 'name']: e.target.value })}
                     />
                     <InputField
                         name="description"
