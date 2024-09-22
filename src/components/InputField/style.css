@@ -1,24 +1,24 @@
-.input-field {
-    margin-bottom: 16px;
+.inputField {
+    margin-bottom: 20px;
 }
 
-.input-field input {
+.inputField input {
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px  #ccc;
     border-radius: 4px;
     transition: border-color 0.3s ease;
     outline: none;
     box-sizing: border-box;
 }
 
-.input-field input:focus {
+.inputField input:focus {
     border-color: #007bff; 
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.input-field input::placeholder {
+.inputField input::placeholder {
     color: #999;
     font-style: italic;
 }

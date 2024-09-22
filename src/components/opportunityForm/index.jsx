@@ -1,3 +1,4 @@
+import './style.css';
 import React, { useState, useEffect } from 'react';
 import { getONGs } from '../../services/ongService';
 import { createOpportunity } from '../../services/opportunityService';
@@ -33,8 +34,14 @@ export default function OpportunityForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Converte as datas para o formato YYYY-MM-DD
+            const formattedStartDate = new Date(formData.startDate).toISOString().split('T')[0];
+            const formattedEndDate = new Date(formData.endDate).toISOString().split('T')[0];
+
             await createOpportunity({
                 ...formData,
+                startDate: formattedStartDate,
+                endDate: formattedEndDate,
                 requirements: formData.requirements.split(',').map(req => req.trim())
             });
             setSuccessMessage("Oportunidade criada com sucesso!");
@@ -65,10 +72,20 @@ export default function OpportunityForm() {
             <InputField name="location" value={formData.location} onChange={handleChange} placeholder="Cidade/Estado" />
 
             <label>Data de Início:</label>
-            <InputField name="startDate" value={formData.startDate} onChange={handleChange} placeholder="Data de início (AAAA-MM-DD)" />
+            <input
+                type="date"
+                name="startDate"
+                value={formData.startDate}
+                onChange={handleChange}
+            />
 
             <label>Data de Término:</label>
-            <InputField name="endDate" value={formData.endDate} onChange={handleChange} placeholder="Data de término (AAAA-MM-DD)" />
+            <input
+                type="date"
+                name="endDate"
+                value={formData.endDate}
+                onChange={handleChange}
+            />
 
             <label>Requisitos (separados por vírgula):</label>
             <InputField name="requirements" value={formData.requirements} onChange={handleChange} placeholder="Requisitos para a oportunidade" />

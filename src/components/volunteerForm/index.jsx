@@ -76,7 +76,7 @@ export default function VolunteerForm() {
                 label="ONG"
                 name="ongId"
                 value={formData.ongId}
-                options={ongs}
+                options={ongs.map(ong => ({ id: ong.id, name: ong.name }))}
                 onChange={handleChange}
                 placeholder="Selecione uma ONG"
             />
@@ -85,7 +85,7 @@ export default function VolunteerForm() {
                 label="Oportunidade"
                 name="opportunityId"
                 value={formData.opportunityId}
-                options={opportunities}
+                options={opportunities.map(opportunity => ({ id: opportunity.id, name: opportunity.title }))}
                 onChange={handleChange}
                 placeholder="Selecione uma Oportunidade"
             />

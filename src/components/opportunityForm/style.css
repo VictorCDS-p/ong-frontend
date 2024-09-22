@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.forms {
+    width: 100%;
+    margin: 40px auto;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.forms h2 {
+    font-size: 28px;
+    color: #5b8284;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.forms label {
+    font-size: 18px;
+    color: #333;
+    margin: 15px;
+    text-align: left;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+
+.forms .inputField,
+.forms select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 30px; /* Aumentando o espaçamento entre os inputs */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.forms .inputField:focus,
+.forms select:focus {
+    border-color: #5b8284;
+    outline: none;
+}
+
+.forms .button {
+    background-color: #fbb646;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.forms .button:hover {
+    background-color: #e0a93f;
+}
+
+.forms .success-message {
+    margin-top: 20px;
+    color: #4caf50; /* Verde para mensagem de sucesso */
+    font-size: 16px;
+}

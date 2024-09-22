@@ -1,7 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .entitiesContainer {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px; /* Espaçamento entre os cards */
+    gap: 20px; /* Espaçamento entre os cards */
 }
 
 .entityCard {
@@ -29,9 +35,7 @@
 .entityCard h2 {
     font-size: 1.25rem; /* Tamanho do texto do título */
     line-height: 1.2; /* Altura da linha para espaçamento */
-    overflow: hidden; /* Esconder texto que ultrapassa o limite */
-    text-overflow: ellipsis; /* Adicionar "..." ao final do texto longo */
-    white-space: nowrap; /* Não quebrar linha */
+    color: #5b8284; /* Cor dos títulos */
     margin-bottom: 10px; /* Espaçamento inferior */
 }
 
@@ -52,7 +56,6 @@ button {
     transition: background-color 0.3s;
 }
 
-
 .custom-button {
     margin-left: 10px;
 }
@@ -60,6 +63,55 @@ button {
 button:hover {
     background-color: #e0a93f;
 }
+
+/* Estilos para inputs do tipo date */
+input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 16px;
+    transition: border-color 0.3s; /* Efeito de transição ao focar */
+    width: 100%; /* Ocupa toda a largura do container */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+}
+
+/* Estilo ao focar nos inputs de data */
+input[type="date"]:focus {
+    border-color: #fbb646; /* Borda do calendário ao focar */
+    outline: none; /* Remove a borda padrão do navegador */
+}
+
+/* Estilizando o label associado ao input */
+label {
+    font-weight: bold;
+    margin-bottom: 5px; /* Espaçamento abaixo do label */
+    display: block; /* Garante que o label ocupe uma linha inteira */
+}
+
+form {
+    margin-top: 50px; /* Aumenta o espaçamento acima do formulário */
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+a {
+    color: #5b8284; /* Cor padrão do link */
+    text-decoration: none; /* Remove o sublinhado do link */
+    transition: color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+a:hover {
+    color: #2a94d9; /* Cor do link ao passar o mouse */
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
 
 @media (max-width: 768px) {
     .entityCard {
