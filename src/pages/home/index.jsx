@@ -1,36 +1,46 @@
 import "./style.css";
-import React, { useState } from 'react';
-
+import React, { useState, useRef } from 'react';
 import Header from "../../components/header";
 import Button from "../../components/button";
 import Card from "../../components/card";
+import mainImg from '../../assets/mainImg.png';
 import Footer from "../../components/footer";
 import ONGForm from "../../components/ONGForm";
 import VolunteerForm from "../../components/volunteerForm";
 import OpportunityForm from "../../components/opportunityForm";
 import SelectAndListEntities from "../../components/SelectAndListEntities";
 
-import { useRef } from 'react';
-
-
-
 export default function Home() {
-    const scrollRef = useRef(null);
-
-    const scrollToText = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
+    const infoSectionRef = useRef(null);
+    const resourcesSectionRef = useRef(null);
     const [showOngForm, setShowOngForm] = useState(false);
     const [showVolunteerForm, setShowVolunteerForm] = useState(false);
     const [showOpportunityForm, setShowOpportunityForm] = useState(false);
     const [showSelectEntities, setShowSelectEntities] = useState(false);
 
+    const scrollToSection = (section) => {
+        switch (section) {
+            case 'info':
+                infoSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+                break;
+            case 'resources':
+                resourcesSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleShowForm = (formType) => {
+        setShowOngForm(formType === 'ong');
+        setShowVolunteerForm(formType === 'volunteer');
+        setShowOpportunityForm(formType === 'opportunity');
+        setShowSelectEntities(formType === 'select');
+    };
+
     return (
         <>
-            <Header />
+            <Header onMenuItemClick={scrollToSection} />
 
             <div className="mainContent">
                 <div className="textContent">
@@ -41,95 +51,63 @@ export default function Home() {
                         <li>Conecte-se com ONGs.</li>
                         <li>Gerencie e acompanhe seu impacto.</li>
                     </ul>
-                    <Button label="Saiba mais" type="button" onClick={scrollToText} />
+                    <Button label="Saiba mais" type="button" onClick={() => scrollToSection('info')} />
                 </div>
 
                 <div className="imageContent">
-                    <img src="src\assets\kisspng-volunteering-clip-art-volunteer-5ac22caac1ba33.9703998215226748587935.png" alt="" />
+                    <img src={mainImg} alt="Voluntariado" />
                 </div>
             </div>
 
-            <div className="infoSection" ref={scrollRef}>
+            <div className="infoSection" ref={infoSectionRef}>
                 <h2>Sobre o Projeto</h2>
                 <p>
                     Este site foi criado com o objetivo de facilitar a conexão entre pessoas que desejam se voluntariar e ONGs que buscam por ajuda. Muitas vezes, há uma grande quantidade de oportunidades de voluntariado disponíveis, mas as pessoas não sabem onde procurar, ou como encontrar uma organização que esteja alinhada com seus interesses e habilidades.
                 </p>
-                <p>
-                    Com essa plataforma, acreditamos que podemos criar um ponto de encontro digital, onde ONGs podem listar suas necessidades de voluntários, e indivíduos podem explorar essas oportunidades de maneira simples e intuitiva. Através do nosso sistema, você poderá descobrir ONGs em sua região ou em qualquer lugar do mundo, entender quais causas elas apoiam, e se candidatar a projetos que façam sentido para você.
-                </p>
-                <p>
-                    O voluntariado não é apenas uma forma de ajudar os outros, mas também uma oportunidade de crescimento pessoal. Você poderá adquirir novas habilidades, conhecer novas pessoas, e se envolver em causas importantes para a sociedade. Quer seja na área de educação, meio ambiente, saúde ou direitos humanos, sempre há algo que você pode fazer para contribuir.
-                </p>
-                <p>
-                    Nosso sistema permite que você gerencie suas inscrições, acompanhe seu impacto e receba feedback das ONGs. Queremos tornar o processo de voluntariado acessível e eficiente, criando uma ponte entre pessoas e organizações, e, assim, ajudar a construir um mundo melhor para todos.
-                </p>
+                {/* Mais conteúdo aqui */}
             </div>
 
-            <div className="cardsContainer">
-
+            <div className="cardsContainer" ref={resourcesSectionRef}>
                 <div className="title">
                     <h1>Conheça Nossos Recursos</h1>
                 </div>
-
 
                 <div className="cardsContent">
                     <Card
                         image="https://img.icons8.com/cotton/64/trust--v4.png"
                         subtitle="ONGs"
-                        description="Descubra uma variedade de ONGs que trabalham em causas sociais diversas. Apoie projetos voltados para educação, meio ambiente, saúde, e muito mais. Conecte-se diretamente com organizações que precisam da sua ajuda para fazer a diferença."
+                        description="Descubra uma variedade de ONGs que trabalham em causas sociais diversas."
                         buttonLabel="Criar ONG"
-                        onClick={() => {
-                            setShowOngForm(true);
-                            setShowVolunteerForm(false);
-                            setShowOpportunityForm(false);
-                            setShowSelectEntities(false);
-                        }}
+                        onClick={() => handleShowForm('ong')}
                     />
 
                     <Card
                         image="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-jobs-digital-nomading-relocation-flaticons-flat-flat-icons.png"
                         subtitle="Oportunidades"
-                        description="Explore uma lista diversificada de oportunidades de voluntariado. Encontre projetos alinhados aos seus interesses e habilidades, seja em sua comunidade ou em qualquer lugar do mundo. Contribua com causas que têm impacto direto na sociedade."
+                        description="Explore uma lista diversificada de oportunidades de voluntariado."
                         buttonLabel="Criar Oportunidade"
-                        onClick={() => {
-                            setShowOngForm(false);
-                            setShowVolunteerForm(false);
-                            setShowOpportunityForm(true);
-                            setShowSelectEntities(false);
-                        }}
+                        onClick={() => handleShowForm('opportunity')}
                     />
 
                     <Card
                         image="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-volunteer-isolation-flaticons-flat-flat-icons.png"
                         subtitle="Voluntários"
-                        description="Participe ativamente de causas que você se importa! Conecte-se com ONGs e projetos que estão em busca de voluntários como você. Junte-se a outras pessoas motivadas e contribua com o seu tempo e habilidades para transformar o mundo."
+                        description="Participe ativamente de causas que você se importa!"
                         buttonLabel="Registrar Voluntário"
-                        onClick={() => {
-                            setShowOngForm(false);
-                            setShowVolunteerForm(true);
-                            setShowOpportunityForm(false);
-                            setShowSelectEntities(false);
-                        }}
+                        onClick={() => handleShowForm('volunteer')}
                     />
 
                     <Card
                         image="https://img.icons8.com/color/64/search--v1.png"
                         subtitle="Listar e Editar"
-                        description="Gerencie facilmente suas ONGs, Voluntários e Oportunidades. Liste, edite e acompanhe todas as entidades conectadas ao seu projeto, mantendo o controle total de suas contribuições e parcerias com apenas alguns cliques."
+                        description="Gerencie facilmente suas ONGs, Voluntários e Oportunidades."
                         buttonLabel="Listar Entidades"
-                        onClick={() => {
-                            setShowOngForm(false);
-                            setShowVolunteerForm(false);
-                            setShowOpportunityForm(false);
-                            setShowSelectEntities(true);
-                        }}
+                        onClick={() => handleShowForm('select')}
                     />
-
                 </div>
-
             </div>
 
-            <div className="forms">
+            <div className={`forms ${showOngForm || showVolunteerForm || showOpportunityForm || showSelectEntities ? 'visible' : ''}`}>
                 {showOngForm && <ONGForm />}
                 {showVolunteerForm && <VolunteerForm />}
                 {showOpportunityForm && <OpportunityForm />}

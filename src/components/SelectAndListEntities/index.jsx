@@ -1,5 +1,4 @@
 import './style.css';
-
 import React, { useState, useEffect } from 'react';
 import { getONGs, updateONG, deleteONG } from '../../services/ongService';
 import { getOpportunities, updateOpportunity, deleteOpportunity } from '../../services/opportunityService';
@@ -15,6 +14,7 @@ export default function ListEntities() {
     const [isEditing, setIsEditing] = useState(false);
     const [ongs, setONGs] = useState([]);
     const [opportunities, setOpportunities] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const fetchEntities = async (entityType) => {
         try {
@@ -47,6 +47,7 @@ export default function ListEntities() {
         setSelectedEntity(value);
         setEditData({ requirements: [], interests: [] });
         setIsEditing(false);
+        setSearchTerm('');
     };
 
     const handleEdit = (entity) => {
@@ -110,6 +111,10 @@ export default function ListEntities() {
         return opportunity ? opportunity.title : "Não vinculada";
     };
 
+    const filteredEntities = entities.filter(entity =>
+        (entity.name || entity.title).toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <>
             <SelectDropdown
@@ -125,28 +130,32 @@ export default function ListEntities() {
                 placeholder="Selecione uma opção"
             />
 
+            <InputField
+                name="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Pesquise por nome ou título"
+            />
+
             <div className="entitiesContainer">
-                {entities.map((entity) => (
+                {filteredEntities.map((entity) => (
                     <div key={entity.id} className="entityCard">
                         <h2>{entity.name || entity.title}</h2>
-
                         <div className="entityDetails">
                             {selectedEntity === 'ongs' && (
                                 <>
                                     <p><strong>Descrição:</strong> {entity.description}</p>
                                     <p><strong>Localização:</strong> {entity.location}</p>
-                                    <p><strong>Website:</strong><a href={entity.website.startsWith('http') ? entity.website : `http://${entity.website}`}target="_blank"rel="noopener noreferrer"> {entity.website}</a></p>
+                                    <p><strong>Website:</strong><a href={entity.website && entity.website.startsWith('http') ? entity.website : `http://${entity.website}`} target="_blank" rel="noopener noreferrer"> {entity.website}</a></p>
                                     <p><strong>Email de Contato:</strong> {entity.contactEmail}</p>
                                 </>
                             )}
-
                             {selectedEntity === 'opportunities' && (
                                 <>
                                     <p><strong>Descrição:</strong> {entity.description}</p>
                                     <p><strong>Data de Início:</strong> {entity.startDate}</p>
                                     <p><strong>Data de Término:</strong> {entity.endDate}</p>
-                                    <p>
-                                        <strong>Requisitos:</strong>
+                                    <p><strong>Requisitos:</strong>
                                         {Array.isArray(entity.requirements) && entity.requirements.length > 0
                                             ? entity.requirements.join(', ')
                                             : 'Nenhum requisito'}
@@ -154,13 +163,11 @@ export default function ListEntities() {
                                     <p><strong>ONGs Vinculadas:</strong> {getONGName(entity.ongId)}</p>
                                 </>
                             )}
-
                             {selectedEntity === 'volunteers' && (
                                 <>
                                     <p><strong>Email:</strong> {entity.email}</p>
                                     <p><strong>Telefone:</strong> {entity.phone}</p>
-                                    <p>
-                                        <strong>Interesses:</strong>
+                                    <p><strong>Interesses:</strong>
                                         {Array.isArray(entity.interests) ? entity.interests.join(', ') : 'Nenhum interesse'}
                                     </p>
                                     <p><strong>ONG Vinculada:</strong> {getONGName(entity.ongId)}</p>
@@ -250,22 +257,16 @@ export default function ListEntities() {
                             <label>Requisitos:</label>
                             <InputField
                                 name="requirements"
-                                value={Array.isArray(editData.requirements) ? editData.requirements.join(', ') : ''}
-                                onChange={(e) => setEditData({ ...editData, requirements: e.target.value.split(',').map(req => req.trim()) })}
-                                placeholder="Requisitos (separe com vírgulas)"
+                                value={editData.requirements.join(', ')}
+                                onChange={(e) => setEditData({ ...editData, requirements: e.target.value.split(', ') })}
+                                placeholder="Requisitos (separados por vírgula)"
                             />
                         </>
+
                     )}
 
                     {selectedEntity === 'volunteers' && (
                         <>
-                            <label>Nome:</label>
-                            <InputField
-                                name="name"
-                                value={editData.name}
-                                onChange={(e) => setEditData({ ...editData, name: e.target.value })}
-                                placeholder="Nome"
-                            />
                             <label>Email:</label>
                             <InputField
                                 name="email"
@@ -284,14 +285,13 @@ export default function ListEntities() {
                             <InputField
                                 name="interests"
                                 value={editData.interests.join(', ')}
-                                onChange={(e) => setEditData({ ...editData, interests: e.target.value.split(',').map(i => i.trim()) })}
-                                placeholder="Interesses (separe com vírgulas)"
+                                onChange={(e) => setEditData({ ...editData, interests: e.target.value.split(', ') })}
+                                placeholder="Interesses (separados por vírgula)"
                             />
                         </>
                     )}
-
-                    <Button type="submit" label="Atualizar" />
-                    <Button type="button" label="Cancelar" onClick={handleCancel} />
+                    <Button type="submit" label="Salvar" />
+                    <Button type="button" onClick={handleCancel} label="Cancelar" />
                 </form>
             )}
         </>

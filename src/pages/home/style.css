@@ -85,7 +85,7 @@
     justify-content: center; 
     align-items: center; 
     text-align: center;
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
 
 }
 
@@ -234,4 +234,87 @@
 
 .forms .button:hover {
     background-color: #e0a93f;
+}
+
+.forms {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px); /* Desloca os formulários para baixo */
+    visibility: hidden; /* Esconde os formulários inicialmente */
+}
+
+.forms.visible {
+    opacity: 1;
+    transform: translateY(0); /* Restaura a posição original */
+    visibility: visible; /* Torna os formulários visíveis */
+}
+
+/* Media Queries para Responsividade */
+
+@media (max-width: 768px) {
+    .mainContent {
+        flex-direction: column; /* Coloca os elementos em coluna em telas menores */
+        align-items: center; /* Centraliza os elementos */
+    }
+
+    .textContent {
+        padding: 20px; /* Reduz o padding para telas menores */
+        max-width: 100%; /* Permite que ocupe toda a largura disponível */
+    }
+
+    .mainContent .imageContent img {
+        width: 100%; /* Faz a imagem ocupar 100% da largura do contêiner */
+        margin-right: 0; /* Remove a margem à direita */
+    }
+
+    .infoSection {
+        padding: 40px 20px; /* Reduz o padding */
+        min-height: auto; /* Remove a altura mínima em telas pequenas */
+    }
+
+    .cardsContainer {
+        padding: 40px 20px; /* Reduz o padding */
+        flex-direction: column; /* Muda para coluna */
+    }
+
+    .cardsContent .card {
+        width: 100%; /* Faz os cards ocuparem toda a largura */
+        max-width: 300px; /* Limita a largura máxima dos cards */
+    }
+
+    .forms {
+        width: 90%; /* Aumenta a largura dos formulários */
+        padding: 20px; /* Reduz o padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .textContent h1 {
+        font-size: 28px; /* Reduz o tamanho da fonte do título */
+    }
+
+    .textContent p {
+        font-size: 16px; /* Reduz o tamanho da fonte do parágrafo */
+    }
+
+    .infoSection h2 {
+        font-size: 28px; /* Reduz o tamanho da fonte do subtítulo */
+    }
+
+    .infoSection p {
+        font-size: 18px; /* Reduz o tamanho da fonte do parágrafo */
+    }
+
+    .cardsContainer .title h1 {
+        font-size: 28px; /* Reduz o tamanho da fonte do título dos cards */
+    }
+
+    .forms h2 {
+        font-size: 24px; /* Reduz o tamanho da fonte do título do formulário */
+    }
+
+    .forms .inputField,
+    .forms .button {
+        font-size: 14px; /* Reduz o tamanho da fonte dos inputs e botões */
+    }
 }

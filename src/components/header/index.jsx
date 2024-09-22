@@ -1,25 +1,21 @@
 import "./style.css";
-export default function Header() {
+import logo from "../../assets/logo.png"
+export default function Header({ onMenuItemClick }) {
     return (
-        <>
-            <header>
-                <div className="interface">
-                    <div className="logo">
-                        <img src="src\assets\logo.png" alt="" />
-                    </div>
-
-                    <nav className="menu-desktop">
-                        <ul>
-                            <li className="home">Home</li>
-                            <li className="ONGs">ONGs</li>
-                            <li className="volunteer">Voluntários</li>
-                            <li className="opportunity">Oportunidade</li>
-
-                        </ul>
-                    </nav>
+        <header>
+            <div className="interface">
+                <div className="logo">
+                    <img src={logo} alt="Logo" />
                 </div>
-            </header>
-
-        </>
-    )
+                <nav className="menu-desktop">
+                    <ul>
+                        <li onClick={() => onMenuItemClick('info')}>Sobre</li>
+                        <li onClick={() => onMenuItemClick('resources')}>Recursos</li>
+                        {/* <li onClick={() => onMenuItemClick('opportunity')}>Oportunidade</li>
+                        <li onClick={() => onMenuItemClick('search')}>Busca</li> */}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    );
 }

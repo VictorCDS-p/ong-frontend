@@ -27,8 +27,10 @@ header {
 }
 
 .menu-desktop ul {
+    display: flex;
     list-style: none;
     margin: 45px;
+    margin-right: 100;
     padding: 0;
     gap: 50px;
     display: flex;
@@ -36,14 +38,32 @@ header {
 
 .menu-desktop li {
     margin: 0 15px;
-}
-
-.menu-desktop a {
-    color: #fff;
     text-decoration: none;
-    font-size: 18px;
+    transition: color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
 }
 
-.menu-desktop li:hover a {
-    text-decoration: underline;
+
+
+.menu-desktop li:hover  {
+    text-decoration: none;
+    color: #5b8284; /* Cor ao passar o mouse */
+    transform: scale(1.1); /* Efeito de aumento ao passar o mouse */
 }
+
+.menu-desktop li:active {
+    transform: scale(0.95); /* Efeito de clique */
+}
+
+/* Media Queries para o Header */
+
+@media (max-width: 768px) {
+    .logo img {
+        margin-left: 0px;
+    }
+
+    
+
+ 
+}
+
