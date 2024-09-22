@@ -72,7 +72,6 @@ export default function VolunteerForm() {
             <label>Interesses:</label>
             <InputField name="interests" value={formData.interests} onChange={handleChange} placeholder="Áreas de interesse" />
 
-            <label>Selecione a ONG:</label>
             <SelectDropdown
                 label="ONG"
                 name="ongId"
@@ -82,7 +81,6 @@ export default function VolunteerForm() {
                 placeholder="Selecione uma ONG"
             />
 
-            <label>Selecione a Oportunidade:</label>
             <SelectDropdown
                 label="Oportunidade"
                 name="opportunityId"

@@ -1,0 +1,74 @@
+.entitiesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Espaçamento entre os cards */
+}
+
+.entityCard {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease; /* Transições para sombra */
+    flex: 1 1 calc(30% - 20px); /* Ajusta a largura para 30% da tela */
+    min-width: 200px; /* Define uma largura mínima */
+    max-width: 300px; /* Limite de largura máxima */
+    min-height: 250px; /* Altura mínima para os cards */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura/altura */
+    overflow: hidden; /* Impede o transbordamento de conteúdo */
+}
+
+.entityCard.expanded {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao expandir */
+}
+
+.entityCard h2 {
+    font-size: 1.25rem; /* Tamanho do texto do título */
+    line-height: 1.2; /* Altura da linha para espaçamento */
+    overflow: hidden; /* Esconder texto que ultrapassa o limite */
+    text-overflow: ellipsis; /* Adicionar "..." ao final do texto longo */
+    white-space: nowrap; /* Não quebrar linha */
+    margin-bottom: 10px; /* Espaçamento inferior */
+}
+
+.entityDetails {
+    margin-top: 10px;
+    font-size: 0.9rem; /* Tamanho de fonte menor para detalhes */
+}
+
+button {
+    margin-top: 10px;
+    background-color: #fbb646;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+
+.custom-button {
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #e0a93f;
+}
+
+@media (max-width: 768px) {
+    .entityCard {
+        flex: 1 1 calc(100% - 20px); /* 100% em telas menores */
+    }
+}
+
+@media (min-width: 769px) {
+    .entityCard {
+        flex: 1 1 calc(30% - 20px); /* 30% em telas maiores */
+    }
+}
