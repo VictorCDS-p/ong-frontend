@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import Header from "../../components/header";
 import Button from "../../components/button";
 import Card from "../../components/card";
-import mainImg from '../../assets/mainImg.png';
+import mainImg from '../../assets/mainimg.png';
 import Footer from "../../components/footer";
 import ONGForm from "../../components/ONGForm";
 import VolunteerForm from "../../components/volunteerForm";
