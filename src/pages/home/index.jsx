@@ -64,7 +64,15 @@ export default function Home() {
                 <p>
                     Este site foi criado com o objetivo de facilitar a conexão entre pessoas que desejam se voluntariar e ONGs que buscam por ajuda. Muitas vezes, há uma grande quantidade de oportunidades de voluntariado disponíveis, mas as pessoas não sabem onde procurar, ou como encontrar uma organização que esteja alinhada com seus interesses e habilidades.
                 </p>
-                {/* Mais conteúdo aqui */}
+                <p>
+                    Com essa plataforma, acreditamos que podemos criar um ponto de encontro digital, onde ONGs podem listar suas necessidades de voluntários, e indivíduos podem explorar essas oportunidades de maneira simples e intuitiva. Através do nosso sistema, você poderá descobrir ONGs em sua região ou em qualquer lugar do mundo, entender quais causas elas apoiam, e se candidatar a projetos que façam sentido para você.
+                </p>
+                <p>
+                    O voluntariado não é apenas uma forma de ajudar os outros, mas também uma oportunidade de crescimento pessoal. Você poderá adquirir novas habilidades, conhecer novas pessoas, e se envolver em causas importantes para a sociedade. Quer seja na área de educação, meio ambiente, saúde ou direitos humanos, sempre há algo que você pode fazer para contribuir.
+                </p>
+                <p>
+                    Nosso sistema permite que você gerencie suas inscrições, acompanhe seu impacto e receba feedback das ONGs. Queremos tornar o processo de voluntariado acessível e eficiente, criando uma ponte entre pessoas e organizações, e, assim, ajudar a construir um mundo melhor para todos.
+                </p>
             </div>
 
             <div className="cardsContainer" ref={resourcesSectionRef}>
