@@ -9,21 +9,26 @@ export default function ListEntities() {
     const [selectedEntity, setSelectedEntity] = useState('');
     const [entities, setEntities] = useState([]);
     const [editData, setEditData] = useState(null);
+    const [expandedEntity, setExpandedEntity] = useState(null); // Estado para controle de "Mostrar Mais"
+    const [ongs, setONGs] = useState([]); // Armazena as ONGs
+    const [opportunities, setOpportunities] = useState([]); // Armazena as Oportunidades
 
-    const fetchData = async (entityType) => {
+    // Função para buscar ONGs e Oportunidades ao carregar a página
+    const fetchEntities = async (entityType) => {
         try {
             let data = [];
             if (entityType === 'ongs') {
                 const response = await getONGs();
                 data = response.ongList || [];
+                setONGs(data); 
             } else if (entityType === 'opportunities') {
                 const response = await getOpportunities();
                 data = response.opportunities || [];
+                setOpportunities(data);
             } else if (entityType === 'volunteers') {
                 const response = await getVolunteers();
                 data = response.volunteers || [];
             }
-            console.log(`Dados recebidos para ${entityType}:`, data);
             setEntities(data);
         } catch (error) {
             console.error(`Erro ao buscar ${entityType}:`, error.message);
@@ -32,13 +37,14 @@ export default function ListEntities() {
 
     useEffect(() => {
         if (selectedEntity) {
-            fetchData(selectedEntity);
+            fetchEntities(selectedEntity);
         }
     }, [selectedEntity]);
 
     const handleSelectChange = (e) => {
         setSelectedEntity(e.target.value);
         setEditData(null);
+        setExpandedEntity(null); // Reseta o estado de "Mostrar Mais" ao trocar de entidade
     };
 
     const handleEdit = (entity) => {
@@ -52,24 +58,15 @@ export default function ListEntities() {
         try {
             let response;
             if (selectedEntity === 'ongs') {
-                response = await updateONG(editData.id, {
-                    name: editData.name,
-                    description: editData.description,
-                });
+                response = await updateONG(editData.id, editData);
             } else if (selectedEntity === 'opportunities') {
-                response = await updateOpportunity(editData.id, {
-                    title: editData.title,
-                    description: editData.description,
-                });
+                response = await updateOpportunity(editData.id, editData);
             } else if (selectedEntity === 'volunteers') {
-                response = await updateVolunteer(editData.id, {
-                    name: editData.name,
-                    description: editData.description,
-                });
+                response = await updateVolunteer(editData.id, editData);
             }
 
             console.log("Atualização bem-sucedida:", response);
-            fetchData(selectedEntity); // Recarrega os dados
+            fetchEntities(selectedEntity); // Recarrega os dados
             setEditData(null); // Limpa os dados após a atualização
         } catch (error) {
             console.error("Erro ao atualizar:", error.message);
@@ -88,10 +85,24 @@ export default function ListEntities() {
             }
 
             console.log("Remoção bem-sucedida:", response);
-            fetchData(selectedEntity); // Recarrega os dados
+            fetchEntities(selectedEntity); // Recarrega os dados
         } catch (error) {
             console.error("Erro ao remover:", error.message);
         }
+    };
+
+    const handleExpand = (entity) => {
+        setExpandedEntity(expandedEntity === entity.id ? null : entity.id); // Alterna o estado de "Mostrar Mais"
+    };
+
+    const getONGName = (ongId) => {
+        const ong = ongs.find(o => o.id === ongId);
+        return ong ? ong.name : "Não vinculada";
+    };
+
+    const getOpportunityTitle = (opportunityId) => {
+        const opportunity = opportunities.find(o => o.id === opportunityId);
+        return opportunity ? opportunity.title : "Não vinculada";
     };
 
     return (
@@ -105,8 +116,46 @@ export default function ListEntities() {
 
             <div>
                 {entities.map((entity) => (
-                    <div key={entity.id}>
+                    <div key={entity.id} className="entity-card">
                         <h2>{entity.name || entity.title}</h2>
+
+                        {/* Exibe informações adicionais com "Mostrar Mais" */}
+                        {expandedEntity === entity.id && (
+                            <div className="entity-details">
+                                {selectedEntity === 'ongs' && (
+                                    <>
+                                        <p><strong>Descrição:</strong> {entity.description}</p>
+                                        <p><strong>Localização:</strong> {entity.location}</p>
+                                        <p><strong>Website:</strong> <a href={entity.website} target="_blank" rel="noopener noreferrer">{entity.website}</a></p>
+                                        <p><strong>Email de Contato:</strong> {entity.contactEmail}</p>
+                                    </>
+                                )}
+
+                                {selectedEntity === 'opportunities' && (
+                                    <>
+                                        <p><strong>Descrição:</strong> {entity.description}</p>
+                                        <p><strong>Data de Início:</strong> {entity.startDate}</p>
+                                        <p><strong>Data de Término:</strong> {entity.endDate}</p>
+                                        <p><strong>Requisitos:</strong> {entity.requirements.join(', ')}</p>
+                                        <p><strong>ONGs Vinculadas:</strong> {getONGName(entity.ongId)}</p>
+                                    </>
+                                )}
+
+                                {selectedEntity === 'volunteers' && (
+                                    <>
+                                        <p><strong>Email:</strong> {entity.email}</p>
+                                        <p><strong>Telefone:</strong> {entity.phone}</p>
+                                        <p><strong>Interesses:</strong> {entity.interests}</p>
+                                        <p><strong>ONG Vinculada:</strong> {getONGName(entity.ongId)}</p>
+                                        <p><strong>Oportunidade Vinculada:</strong> {getOpportunityTitle(entity.opportunityId)}</p>
+                                    </>
+                                )}
+                            </div>
+                        )}
+
+                        <button onClick={() => handleExpand(entity)}>
+                            {expandedEntity === entity.id ? "Mostrar Menos" : "Mostrar Mais"}
+                        </button>
                         <button onClick={() => handleEdit(entity)}>Editar</button>
                         <button onClick={() => handleDelete(entity.id)}>Remover</button>
                     </div>

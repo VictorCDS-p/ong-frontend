@@ -4,7 +4,7 @@ import { getOpportunities } from '../../services/opportunityService';
 import { createVolunteer } from '../../services/volunteerService';
 import InputField from '../../components/InputField';
 import Button from '../button';
-import SelectDropdown from '../SelectDropdown'; // Importando o SelectDropdown
+import SelectDropdown from '../SelectDropdown';
 
 export default function VolunteerForm() {
     const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ export default function VolunteerForm() {
 
     const [ongs, setONGs] = useState([]);
     const [opportunities, setOpportunities] = useState([]);
+    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
         const fetchONGs = async () => {
@@ -41,9 +42,17 @@ export default function VolunteerForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const volunteer = { ...formData };
-            await createVolunteer(volunteer);
-            console.log('Voluntário registrado com sucesso');
+            await createVolunteer(formData);
+            setSuccessMessage("Voluntário registrado com sucesso!");
+
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                interests: '',
+                ongId: '',
+                opportunityId: ''
+            });
         } catch (error) {
             console.error('Erro ao registrar voluntário:', error.message);
         }
@@ -51,11 +60,19 @@ export default function VolunteerForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <InputField name="name" value={formData.name} onChange={handleChange} placeholder="Nome" />
-            <InputField name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
-            <InputField name="phone" value={formData.phone} onChange={handleChange} placeholder="Telefone" />
-            <InputField name="interests" value={formData.interests} onChange={handleChange} placeholder="Interesses" />
+            <label>Nome:</label>
+            <InputField name="name" value={formData.name} onChange={handleChange} placeholder="Nome completo" />
 
+            <label>Email:</label>
+            <InputField name="email" value={formData.email} onChange={handleChange} placeholder="Email para contato" />
+
+            <label>Telefone:</label>
+            <InputField name="phone" value={formData.phone} onChange={handleChange} placeholder="Número de telefone" />
+
+            <label>Interesses:</label>
+            <InputField name="interests" value={formData.interests} onChange={handleChange} placeholder="Áreas de interesse" />
+
+            <label>Selecione a ONG:</label>
             <SelectDropdown
                 label="ONG"
                 name="ongId"
@@ -65,6 +82,7 @@ export default function VolunteerForm() {
                 placeholder="Selecione uma ONG"
             />
 
+            <label>Selecione a Oportunidade:</label>
             <SelectDropdown
                 label="Oportunidade"
                 name="opportunityId"
@@ -75,6 +93,8 @@ export default function VolunteerForm() {
             />
 
             <Button label="Registrar Voluntário" type="submit" />
+
+            {successMessage && <p className="success-message">{successMessage}</p>}
         </form>
     );
 }
