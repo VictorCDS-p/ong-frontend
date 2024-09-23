@@ -4,6 +4,7 @@ import { getONGs } from '../../services/ongService';
 import { createOpportunity } from '../../services/opportunityService';
 import InputField from '../InputField';
 import Button from '../button';
+import SelectDropdown from '../SelectDropdown';
 
 export default function OpportunityForm() {
     const [formData, setFormData] = useState({
@@ -33,8 +34,14 @@ export default function OpportunityForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Verifica se a data de início é maior que a data de término
+        if (new Date(formData.startDate) > new Date(formData.endDate)) {
+            alert('A data de início não pode ser maior que a data de término.');
+            return;
+        }
+
         try {
-            // Converte as datas para o formato YYYY-MM-DD
             const formattedStartDate = new Date(formData.startDate).toISOString().split('T')[0];
             const formattedEndDate = new Date(formData.endDate).toISOString().split('T')[0];
 
@@ -46,6 +53,7 @@ export default function OpportunityForm() {
             });
             setSuccessMessage("Oportunidade criada com sucesso!");
 
+            // Resetando o formulário
             setFormData({
                 title: '',
                 description: '',
@@ -62,41 +70,45 @@ export default function OpportunityForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <label>Título:</label>
-            <InputField name="title" value={formData.title} onChange={handleChange} placeholder="Título da oportunidade" />
+            <label htmlFor="title">Título:</label>
+            <InputField id="title" name="title" value={formData.title} onChange={handleChange} placeholder="Título da oportunidade" />
 
-            <label>Descrição:</label>
-            <InputField name="description" value={formData.description} onChange={handleChange} placeholder="Breve descrição" />
+            <label htmlFor="description">Descrição:</label>
+            <InputField id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Breve descrição" />
 
-            <label>Localização:</label>
-            <InputField name="location" value={formData.location} onChange={handleChange} placeholder="Cidade/Estado" />
+            <label htmlFor="location">Localização:</label>
+            <InputField id="location" name="location" value={formData.location} onChange={handleChange} placeholder="Cidade/Estado" />
 
-            <label>Data de Início:</label>
+            <label htmlFor="requirements">Requisitos (separados por vírgula):</label>
+            <InputField id="requirements" name="requirements" value={formData.requirements} onChange={handleChange} placeholder="Requisitos para a oportunidade" />
+
+            <label htmlFor="startDate">Data de Início:</label>
             <input
+                id="startDate"
                 type="date"
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleChange}
             />
 
-            <label>Data de Término:</label>
+            <label htmlFor="endDate">Data de Término:</label>
             <input
+                id="endDate"
                 type="date"
                 name="endDate"
                 value={formData.endDate}
                 onChange={handleChange}
             />
 
-            <label>Requisitos (separados por vírgula):</label>
-            <InputField name="requirements" value={formData.requirements} onChange={handleChange} placeholder="Requisitos para a oportunidade" />
-
-            <label>Selecione a ONG:</label>
-            <select name="ongId" value={formData.ongId} onChange={handleChange}>
-                <option value="">Selecione uma ONG</option>
-                {ongs.map((ong) => (
-                    <option key={ong.id} value={ong.id}>{ong.name}</option>
-                ))}
-            </select>
+            <label htmlFor="ongId">Selecione a ONG:</label>
+            <SelectDropdown
+                id="ongId" 
+                name="ongId"
+                value={formData.ongId}
+                options={ongs}
+                onChange={(value) => setFormData({ ...formData, ongId: value })}
+                placeholder="Selecione uma ONG"
+            />
 
             <Button label="Criar Oportunidade" type="submit" />
 

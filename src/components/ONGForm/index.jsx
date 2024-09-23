@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react";  // Certifique-se de importar o useState
 import { createONG } from "../../services/ongService";
 import "./style.css";
 import InputField from "../InputField";
@@ -25,6 +25,7 @@ export default function ONGForm() {
             await createONG(formData);
             setSuccessMessage("ONG registrada com sucesso!");
 
+            // Limpar o formulário
             setFormData({
                 name: '',
                 description: '',
@@ -40,20 +41,20 @@ export default function ONGForm() {
     return (
         <div className="orgForm">
             <form onSubmit={handleSubmit}>
-                <label>Nome da ONG:</label>
-                <InputField name="name" value={formData.name} onChange={handleChange} placeholder="Nome da ONG" />
+                <label htmlFor="name">Nome da ONG:</label>
+                <InputField id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Nome da ONG" autocomplete="name" />
 
-                <label>Descrição:</label>
-                <InputField name="description" value={formData.description} onChange={handleChange} placeholder="Descrição breve da ONG" />
+                <label htmlFor="description">Descrição:</label>
+                <InputField id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Descrição breve da ONG" autocomplete="off" />
 
-                <label>Localização:</label>
-                <InputField name="location" value={formData.location} onChange={handleChange} placeholder="Cidade/Estado" />
+                <label htmlFor="location">Localização:</label>
+                <InputField id="location" name="location" value={formData.location} onChange={handleChange} placeholder="Cidade/Estado" autocomplete="address-level2" />
 
-                <label>Website:</label>
-                <InputField name="website" value={formData.website} onChange={handleChange} placeholder="URL do site da ONG" />
+                <label htmlFor="website">Website:</label>
+                <InputField id="website" name="website" value={formData.website} onChange={handleChange} placeholder="URL do site da ONG" autocomplete="url" />
 
-                <label>Email de Contato:</label>
-                <InputField name="contactEmail" value={formData.contactEmail} onChange={handleChange} placeholder="Email de contato da ONG" />
+                <label htmlFor="contactEmail">Email de Contato:</label>
+                <InputField id="contactEmail" name="contactEmail" value={formData.contactEmail} onChange={handleChange} placeholder="Email de contato da ONG" autocomplete="email" />
 
                 <Button label="Criar ONG" type="submit" />
 

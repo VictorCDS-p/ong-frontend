@@ -1,3 +1,4 @@
+import './style.css';
 import React, { useState, useEffect } from 'react';
 import { getONGs } from '../../services/ongService';
 import { getOpportunities } from '../../services/opportunityService';
@@ -60,33 +61,63 @@ export default function VolunteerForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <label>Nome:</label>
-            <InputField name="name" value={formData.name} onChange={handleChange} placeholder="Nome completo" />
+            <label htmlFor="name">Nome:</label>
+            <InputField 
+                id="name" 
+                name="name" 
+                value={formData.name} 
+                onChange={handleChange} 
+                placeholder="Nome completo" 
+                autoComplete="given-name" 
+            />
 
-            <label>Email:</label>
-            <InputField name="email" value={formData.email} onChange={handleChange} placeholder="Email para contato" />
+            <label htmlFor="email">Email:</label>
+            <InputField 
+                id="email" 
+                name="email" 
+                value={formData.email} 
+                onChange={handleChange} 
+                placeholder="Email para contato" 
+                autoComplete="email" 
+            />
 
-            <label>Telefone:</label>
-            <InputField name="phone" value={formData.phone} onChange={handleChange} placeholder="Número de telefone" />
+            <label htmlFor="phone">Telefone:</label>
+            <InputField 
+                id="phone" 
+                name="phone" 
+                value={formData.phone} 
+                onChange={handleChange} 
+                placeholder="Número de telefone" 
+                autoComplete="tel" 
+            />
 
-            <label>Interesses:</label>
-            <InputField name="interests" value={formData.interests} onChange={handleChange} placeholder="Áreas de interesse" />
+            <label htmlFor="interests">Interesses:</label>
+            <InputField 
+                id="interests" 
+                name="interests" 
+                value={formData.interests} 
+                onChange={handleChange} 
+                placeholder="Áreas de interesse" 
+                autoComplete="off" 
+            />
 
+            <label htmlFor="ongId">ONG:</label>
             <SelectDropdown
-                label="ONG"
+                id="ongId"
                 name="ongId"
                 value={formData.ongId}
                 options={ongs.map(ong => ({ id: ong.id, name: ong.name }))}
-                onChange={handleChange}
+                onChange={(value) => setFormData({ ...formData, ongId: value })}
                 placeholder="Selecione uma ONG"
             />
 
+            <label htmlFor="opportunityId">Oportunidade:</label>
             <SelectDropdown
-                label="Oportunidade"
+                id="opportunityId"
                 name="opportunityId"
                 value={formData.opportunityId}
                 options={opportunities.map(opportunity => ({ id: opportunity.id, name: opportunity.title }))}
-                onChange={handleChange}
+                onChange={(value) => setFormData({ ...formData, opportunityId: value })}
                 placeholder="Selecione uma Oportunidade"
             />
 
