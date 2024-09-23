@@ -1,7 +1,3 @@
-Aqui está um exemplo de README para o seu projeto frontend. Ele inclui uma seção de requisitos, explicando a necessidade da API, além de instruções detalhadas sobre como rodar o projeto. Também deixei uma parte dedicada à apresentação com imagens.
-
----
-
 # Gerenciamento de ONGs, Voluntários e Oportunidades
 
 Este projeto é a interface frontend para um sistema de gerenciamento de ONGs, voluntários e oportunidades. Ele permite que as ONGs registrem oportunidades, os voluntários se candidatem e gerenciem seus interesses, e todas as entidades possam ser visualizadas e manipuladas de maneira intuitiva.
