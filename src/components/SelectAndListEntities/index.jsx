@@ -10,15 +10,30 @@ import SelectDropdown from '../../components/SelectDropdown';
 export default function ListEntities() {
     const [selectedEntity, setSelectedEntity] = useState('');
     const [entities, setEntities] = useState([]);
+    const [ongs, setONGs] = useState([]);
+    const [opportunities, setOpportunities] = useState([]);
     const [editData, setEditData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        fetchONGs();
+    }, []);
 
     useEffect(() => {
         if (selectedEntity) {
             fetchEntities(selectedEntity);
         }
     }, [selectedEntity]);
+
+    const fetchONGs = async () => {
+        try {
+            const data = await getONGs();
+            setONGs(data.ongList || []);
+        } catch (error) {
+            console.error('Erro ao buscar ONGs:', error.message);
+        }
+    };
 
     const fetchEntities = async (entityType) => {
         let data = [];
@@ -28,22 +43,27 @@ export default function ListEntities() {
                 setEntities(data.ongList || []);
             } else if (entityType === 'opportunities') {
                 data = await getOpportunities();
-                const opportunities = data.opportunities.map(opportunity => ({
+                const opportunitiesList = data.opportunities.map(opportunity => ({
                     ...opportunity,
                     requirements: typeof opportunity.requirements === 'string'
                         ? opportunity.requirements.split(',').map(req => req.trim())
-                        : opportunity.requirements || []
+                        : opportunity.requirements || [],
+                    ongs: ongs.filter(ong => opportunity.ongId === ong.id) // Vincular ONGs
                 }));
-                setEntities(opportunities);
+                setOpportunities(opportunitiesList);
+                setEntities(opportunitiesList);
             } else if (entityType === 'volunteers') {
                 data = await getVolunteers();
-                setEntities(data.volunteers || []);
+                const volunteersList = data.volunteers.map(volunteer => ({
+                    ...volunteer,
+                    opportunities: opportunities.filter(op => volunteer.opportunityId === op.id) // Vincular Oportunidades
+                }));
+                setEntities(volunteersList);
             }
         } catch (error) {
             console.error(`Erro ao buscar ${entityType}:`, error.message);
         }
     };
-
 
     const handleSelectChange = (value) => {
         setSelectedEntity(value);
@@ -150,14 +170,18 @@ export default function ListEntities() {
                                     <p><strong>Descrição:</strong> {entity.description}</p>
                                     <p><strong>Data de Início:</strong> {entity.startDate}</p>
                                     <p><strong>Data de Término:</strong> {entity.endDate}</p>
-                                    <p><strong>Requisitos:</strong> {(Array.isArray(entity.requirements) && entity.requirements.length > 0) ? entity.requirements.join(', ') : 'Nenhum requisito'}</p>
+                                    <p><strong>Requisitos:</strong> {Array.isArray(entity.requirements) && entity.requirements.length > 0 ? entity.requirements.join(', ') : 'Nenhum requisito'}</p>
+                                    <p><strong>ONG Vinculada:</strong> {Array.isArray(entity.ongs) && entity.ongs.length > 0 ? entity.ongs.map(ong => ong.name).join(', ') : 'Nenhuma ONG vinculada'}</p>
                                 </>
                             )}
+
                             {selectedEntity === 'volunteers' && (
                                 <>
                                     <p><strong>Email:</strong> {entity.email}</p>
                                     <p><strong>Telefone:</strong> {entity.phone}</p>
                                     <p><strong>Interesses:</strong> {entity.interests?.join(', ') || 'Nenhum interesse'}</p>
+                                    <p><strong>Oportunidade Vinculada:</strong> {Array.isArray(entity.opportunities) && entity.opportunities.length > 0 ? entity.opportunities.map(op => op.title).join(', ') : 'Nenhuma oportunidade vinculada'}</p>
+                                    <p><strong>ONG Vinculada:</strong> {ongs.find(ong => ong.id === entity.ongId)?.name || 'Nenhuma ONG vinculada'}</p>
                                 </>
                             )}
                         </div>
@@ -208,7 +232,6 @@ export default function ListEntities() {
                             />
                         </>
                     )}
-
                     {selectedEntity === 'opportunities' && (
                         <>
                             <label>Título:</label>
@@ -226,51 +249,28 @@ export default function ListEntities() {
                                 placeholder="Descrição"
                             />
                             <label>Data de Início:</label>
-                            <input
+                            <InputField
                                 type="date"
                                 name="startDate"
                                 value={editData.startDate || ''}
-                                onChange={(e) => {
-                                    const newStartDate = e.target.value;
-                                    if (new Date(newStartDate) > new Date(editData.endDate)) {
-                                        alert('A data de início não pode ser maior que a data de término.');
-                                    } else {
-                                        setEditData({ ...editData, startDate: newStartDate });
-                                    }
-                                }}
+                                onChange={(e) => setEditData({ ...editData, startDate: e.target.value })}
                             />
-
                             <label>Data de Término:</label>
-                            <input
+                            <InputField
                                 type="date"
                                 name="endDate"
                                 value={editData.endDate || ''}
-                                onChange={(e) => {
-                                    const newEndDate = e.target.value;
-                                    if (new Date(newEndDate) < new Date(editData.startDate)) {
-                                        alert('A data de término não pode ser menor que a data de início.');
-                                    } else {
-                                        setEditData({ ...editData, endDate: newEndDate });
-                                    }
-                                }}
+                                onChange={(e) => setEditData({ ...editData, endDate: e.target.value })}
                             />
                             <label>Requisitos:</label>
-                            {editData.requirements?.map((req, index) => (
-                                <InputField
-                                    key={index}
-                                    name={`requirement-${index}`}
-                                    value={req}
-                                    onChange={(e) => {
-                                        const newRequirements = [...editData.requirements];
-                                        newRequirements[index] = e.target.value;
-                                        setEditData({ ...editData, requirements: newRequirements });
-                                    }}
-                                    placeholder={`Requisito ${index + 1}`}
-                                />
-                            ))}
+                            <InputField
+                                name="requirements"
+                                value={editData.requirements?.join(', ') || ''}
+                                onChange={(e) => setEditData({ ...editData, requirements: e.target.value.split(',').map(req => req.trim()) })}
+                                placeholder="Requisitos"
+                            />
                         </>
                     )}
-
                     {selectedEntity === 'volunteers' && (
                         <>
                             <label>Nome:</label>
@@ -295,28 +295,17 @@ export default function ListEntities() {
                                 placeholder="Telefone"
                             />
                             <label>Interesses:</label>
-                            {editData.interests?.map((interest, index) => (
-                                <InputField
-                                    key={index}
-                                    name={`interest-${index}`}
-                                    value={interest}
-                                    onChange={(e) => {
-                                        const newInterests = [...editData.interests];
-                                        newInterests[index] = e.target.value;
-                                        setEditData({ ...editData, interests: newInterests });
-                                    }}
-                                    placeholder={`Interesse ${index + 1}`}
-                                />
-                            ))}
+                            <InputField
+                                name="interests"
+                                value={editData.interests?.join(', ') || ''}
+                                onChange={(e) => setEditData({ ...editData, interests: e.target.value.split(',').map(i => i.trim()) })}
+                                placeholder="Interesses"
+                            />
                         </>
                     )}
-
                     <Button type="submit" label="Salvar" />
-                    <Button type="button" label="Cancelar" onClick={resetEditData} />
                 </form>
             )}
-
-
         </>
     );
 }
