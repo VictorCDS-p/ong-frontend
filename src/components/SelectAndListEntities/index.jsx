@@ -54,17 +54,19 @@ export default function ListEntities() {
     };
 
     const handleEdit = (entity) => {
+        console.log("Entidade sendo editada:", entity); // Adicionado para depuração
         setEditData({
             ...entity,
             requirements: entity.requirements || [],
-            interests: Array.isArray(entity.interests) ? entity.interests : []
+        
         });
         setIsEditing(true);
     };
 
+
     const handleUpdate = async (e) => {
         e.preventDefault();
-        if (!editData?.id) return;
+        if (!editData.id) return;
 
         if (selectedEntity === 'opportunities' && editData.startDate > editData.endDate) {
             alert('A data de início não pode ser maior que a data de término.');
@@ -180,8 +182,7 @@ export default function ListEntities() {
                                 <>
                                     <p><strong>Email: </strong> {entity.email}</p>
                                     <p><strong>Telefone: </strong> {entity.phone}</p>
-                                    <p><strong>Interesses: </strong>
-                                        {Array.isArray(entity.interests) ? entity.interests.join(', ') : 'Nenhum interesse'}
+                                    <p><strong>Interesses: </strong>{entity.interests}
                                     </p>
                                 </>
                             )}
@@ -283,8 +284,8 @@ export default function ListEntities() {
                             <InputField
                                 name="requirements"
                                 value={editData.requirements.join(', ') || ''}
-                                onChange={(e) => setEditData({ ...editData, requirements: e.target.value.split(',').map(item => item.trim()) })}
-                                placeholder="Requisitos (separados por vírgula)"
+                                onChange={(e) => setEditData({ ...editData, requirements: e.target.value.split(',').map(req => req.trim()) })}
+                                placeholder="Requisitos (separe por vírgula)"
                                 autoComplete="off"
                             />
                         </>
@@ -319,16 +320,16 @@ export default function ListEntities() {
                             <label>Interesses:</label>
                             <InputField
                                 name="interests"
-                                value={editData.interests.join(', ') || ''}
-                                onChange={(e) => setEditData({ ...editData, interests: e.target.value.split(',').map(item => item.trim()) })}
-                                placeholder="Interesses (separados por vírgula)"
+                                value={editData.interests || ''}
+                                onChange={(e) => setEditData({ ...editData, interests: e.target.value.split(',').map(interest => interest.trim()) })}
+                                placeholder="Interesses (separe por vírgula)"
                                 autoComplete="off"
                             />
                         </>
                     )}
 
                     <Button type="submit" label="Salvar" />
-                    <Button type="button" label="Cancelar" onClick={handleCancel} />
+                    <Button onClick={handleCancel} label="Cancelar" />
                 </form>
             )}
         </>
