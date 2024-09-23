@@ -95,7 +95,3 @@ Aqui estão algumas imagens de exemplo do projeto rodando:
 ## Contribuições
 
 Se você deseja contribuir com este projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request. Todos os tipos de contribuição são bem-vindos.
-
----
-
-Com isso, o seu README está bem estruturado para guiar os usuários e desenvolvedores que queiram rodar e colaborar com o projeto. A parte de apresentação com imagens pode ser personalizada com capturas de tela reais do seu projeto.
