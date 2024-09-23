@@ -1,91 +1,93 @@
-# Gerenciamento de ONGs, Voluntários e Oportunidades
+Here is the translation of your README to English:
 
-Este projeto é a interface frontend para um sistema de gerenciamento de ONGs, voluntários e oportunidades. Ele permite que as ONGs registrem oportunidades, os voluntários se candidatem e gerenciem seus interesses, e todas as entidades possam ser visualizadas e manipuladas de maneira intuitiva.
+# NGOs, Volunteers, and Opportunities Management
 
-## Índice
+This project is the frontend interface for a system that manages NGOs, volunteers, and opportunities. It allows NGOs to register opportunities, volunteers to apply and manage their interests, and enables all entities to be viewed and manipulated in an intuitive way.
 
-- [Requisitos](#requisitos)
-- [Instalação](#instalação)
-- [Uso](#uso)
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
 - [API](#api)
-- [Apresentação](#apresentação)
-- [Contribuições](#contribuições)
+- [Presentation](#presentation)
+- [Contributions](#contributions)
 
-## Requisitos
+## Requirements
 
-Para rodar o frontend deste projeto corretamente, é necessário ter a API backend em funcionamento, já que grande parte das funcionalidades depende da comunicação com a base de dados via API. A API gerencia ONGs, oportunidades e voluntários, possibilitando a criação, edição e remoção dessas entidades.
+To run the frontend of this project correctly, you need to have the backend API running, as many of the functionalities depend on communication with the database via API. The API manages NGOs, opportunities, and volunteers, allowing the creation, editing, and removal of these entities.
 
-**Pré-requisitos**:
-- Node.js (v14 ou superior)
-- API backend em funcionamento (consulte o repositório da API [aqui](https://github.com/VictorCDS-p/ong-api))
+**Prerequisites**:
+- Node.js (v14 or higher)
+- Running backend API (check the API repository [here](https://github.com/VictorCDS-p/ong-api))
   
-## Instalação
+## Installation
 
-1. Clone este repositório para a sua máquina local:
+1. Clone this repository to your local machine:
    ```bash
    git clone https://github.com/VictorCDS-p/ong-frontend
    ```
 
-2. Acesse o diretório do projeto:
+2. Navigate to the project directory:
    ```bash
    cd ong-frontend
    ```
 
-3. Instale as dependências:
+3. Install dependencies:
    ```bash
    npm install
    ```
 
-4. Certifique-se de que a URL da API está corretamente configurada em `services` do frontend. Exemplo de configuração:
+4. Ensure that the API URL is correctly configured in the `services` folder of the frontend. Example configuration:
    ```
    API_URL = "http://localhost:3000"
    ```
 
-5. Inicie o projeto:
+5. Start the project:
    ```bash
    npm run dev
    ```
 
-6. O frontend será iniciado em `http://localhost:5173/`, ou na porta configurada no seu ambiente.
+6. The frontend will be running at `http://localhost:5173/`, or at the port configured in your environment.
 
-## Uso
+## Usage
 
-Após a instalação e execução, o frontend oferece as seguintes funcionalidades:
+After installation and execution, the frontend offers the following functionalities:
 
-- Listagem de ONGs, oportunidades e voluntários.
-- Criação e edição de ONGs, oportunidades e voluntários.
-- Visualização detalhada de cada entidade.
-- Exclusão de entidades com aviso de confirmação.
+- Listing of NGOs, opportunities, and volunteers.
+- Creation and editing of NGOs, opportunities, and volunteers.
+- Detailed view of each entity.
+- Deletion of entities with confirmation prompt.
 
-### Funcionalidades principais
+### Main Features
 
-- **ONGs**: Cadastro de ONGs com detalhes sobre a organização.
-- **Oportunidades**: As ONGs podem cadastrar e listar oportunidades de voluntariado.
-- **Voluntários**: Os voluntários podem se candidatar e gerenciar seus interesses nas oportunidades disponíveis.
+- **NGOs**: Register NGOs with details about the organization.
+- **Opportunities**: NGOs can register and list volunteer opportunities.
+- **Volunteers**: Volunteers can apply and manage their interests in available opportunities.
 
 ## API
 
-Este projeto se conecta à API para realizar operações CRUD (criação, leitura, atualização e exclusão) de ONGs, oportunidades e voluntários. As principais rotas consumidas pelo frontend são:
+This project connects to the API to perform CRUD (create, read, update, delete) operations on NGOs, opportunities, and volunteers. The main routes consumed by the frontend are:
 
-- `/ongs` - Para listagem, criação e remoção de ONGs.
-- `/opportunities` - Para gerenciar oportunidades de voluntariado.
-- `/volunteers` - Para registrar e listar voluntários.
+- `/ongs` - For listing, creating, and deleting NGOs.
+- `/opportunities` - To manage volunteer opportunities.
+- `/volunteers` - To register and list volunteers.
 
-### Documentação da API
+### API Documentation
 
-Para mais detalhes sobre como configurar e utilizar a API, consulte a documentação [aqui](https://github.com/VictorCDS-p/ong-api).
+For more details on how to set up and use the API, check the documentation [here](https://github.com/VictorCDS-p/ong-api).
 
-## Apresentação
+## Presentation
 
-Aqui estão algumas imagens de exemplo do projeto rodando:
+Here are some example images of the project in action:
 
-### Página Inicial
-![Página Inicial](./src/assets/apresentacao3.gif)
+### Home Page
+![Home Page](./src/assets/apresentacao3.gif)
 
-### Ferramentas
-![Listagem de ONGs](./src/assets/apresentacao2.gif)
+### Tools
+![NGO Listing](./src/assets/apresentacao2.gif)
 
-### Listagem de ONGs
-![Cadastro de Oportunidades](./src/assets/apresentacao1.gif)
+### NGO Listing
+![Opportunity Registration](./src/assets/apresentacao1.gif)
 
-
+This translated version maintains the structure and essence of your original README.
