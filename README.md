@@ -1,7 +1,3 @@
-Aqui está um exemplo de README para o seu projeto frontend. Ele inclui uma seção de requisitos, explicando a necessidade da API, além de instruções detalhadas sobre como rodar o projeto. Também deixei uma parte dedicada à apresentação com imagens.
-
----
-
 # Gerenciamento de ONGs, Voluntários e Oportunidades
 
 Este projeto é a interface frontend para um sistema de gerenciamento de ONGs, voluntários e oportunidades. Ele permite que as ONGs registrem oportunidades, os voluntários se candidatem e gerenciem seus interesses, e todas as entidades possam ser visualizadas e manipuladas de maneira intuitiva.
@@ -21,18 +17,18 @@ Para rodar o frontend deste projeto corretamente, é necessário ter a API backe
 
 **Pré-requisitos**:
 - Node.js (v14 ou superior)
-- API backend em funcionamento (consulte o repositório da API [aqui](https://github.com/seuusuario/api-projeto))
+- API backend em funcionamento (consulte o repositório da API [aqui](https://github.com/VictorCDS-p/ong-api))
   
 ## Instalação
 
 1. Clone este repositório para a sua máquina local:
    ```bash
-   git clone https://github.com/seuusuario/frontend-projeto.git
+   git clone https://github.com/VictorCDS-p/ong-frontend
    ```
 
 2. Acesse o diretório do projeto:
    ```bash
-   cd frontend-projeto
+   cd ong-frontend
    ```
 
 3. Instale as dependências:
@@ -40,17 +36,17 @@ Para rodar o frontend deste projeto corretamente, é necessário ter a API backe
    npm install
    ```
 
-4. Certifique-se de que a URL da API está corretamente configurada no arquivo `.env` do frontend. Exemplo de configuração:
+4. Certifique-se de que a URL da API está corretamente configurada em `services` do frontend. Exemplo de configuração:
    ```
-   REACT_APP_API_URL=http://localhost:3000
+   API_URL = "http://localhost:3000"
    ```
 
 5. Inicie o projeto:
    ```bash
-   npm start
+   npm run dev
    ```
 
-6. O frontend será iniciado em `http://localhost:3001`, ou na porta configurada no seu ambiente.
+6. O frontend será iniciado em `http://localhost:5173/`, ou na porta configurada no seu ambiente.
 
 ## Uso
 
@@ -79,7 +75,7 @@ Certifique-se de que a API está rodando corretamente e que o arquivo `.env` con
 
 ### Documentação da API
 
-Para mais detalhes sobre como configurar e utilizar a API, consulte a documentação [aqui](https://github.com/seuusuario/api-projeto).
+Para mais detalhes sobre como configurar e utilizar a API, consulte a documentação [aqui](https://github.com/VictorCDS-p/ong-api).
 
 ## Apresentação
 
@@ -99,7 +95,3 @@ Aqui estão algumas imagens de exemplo do projeto rodando:
 ## Contribuições
 
 Se você deseja contribuir com este projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request. Todos os tipos de contribuição são bem-vindos.
-
----
-
-Com isso, o seu README está bem estruturado para guiar os usuários e desenvolvedores que queiram rodar e colaborar com o projeto. A parte de apresentação com imagens pode ser personalizada com capturas de tela reais do seu projeto.
