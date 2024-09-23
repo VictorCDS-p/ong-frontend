@@ -75,7 +75,7 @@ Certifique-se de que a API está rodando corretamente e que o arquivo `.env` con
 
 ### Documentação da API
 
-Para mais detalhes sobre como configurar e utilizar a API, consulte a documentação [aqui](https://github.com/seuusuario/api-projeto).
+Para mais detalhes sobre como configurar e utilizar a API, consulte a documentação [aqui](https://github.com/VictorCDS-p/ong-api).
 
 ## Apresentação
 
