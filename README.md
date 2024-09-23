@@ -71,8 +71,6 @@ Este projeto se conecta à API para realizar operações CRUD (criação, leitur
 - `/opportunities` - Para gerenciar oportunidades de voluntariado.
 - `/volunteers` - Para registrar e listar voluntários.
 
-Certifique-se de que a API está rodando corretamente e que o arquivo `.env` contém a URL correta para o backend.
-
 ### Documentação da API
 
 Para mais detalhes sobre como configurar e utilizar a API, consulte a documentação [aqui](https://github.com/VictorCDS-p/ong-api).
@@ -90,8 +88,4 @@ Aqui estão algumas imagens de exemplo do projeto rodando:
 ### Listagem de ONGs
 ![Cadastro de Oportunidades](./src/assets/apresentacao1.gif)
 
-> **Nota**: Substitua as imagens acima pelas capturas de tela reais do projeto.
 
-## Contribuições
-
-Se você deseja contribuir com este projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request. Todos os tipos de contribuição são bem-vindos.
