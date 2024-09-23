@@ -12,12 +12,13 @@ export default function ListEntities() {
     const [entities, setEntities] = useState([]);
     const [ongs, setONGs] = useState([]);
     const [opportunities, setOpportunities] = useState([]);
-    const [editData, setEditData] = useState({});
+    const [editData, setEditData] = useState({ interests: [] });
     const [isEditing, setIsEditing] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchONGs();
+        fetchOpportunities();
     }, []);
 
     useEffect(() => {
@@ -35,6 +36,22 @@ export default function ListEntities() {
         }
     };
 
+    const fetchOpportunities = async () => {
+        try {
+            const data = await getOpportunities();
+            const opportunitiesList = data.opportunities.map(opportunity => ({
+                ...opportunity,
+                requirements: typeof opportunity.requirements === 'string'
+                    ? opportunity.requirements.split(',').map(req => req.trim())
+                    : opportunity.requirements || [],
+            }));
+            setOpportunities(opportunitiesList);
+        } catch (error) {
+            console.error('Erro ao buscar oportunidades:', error.message);
+        }
+    };
+
+
     const fetchEntities = async (entityType) => {
         let data = [];
         try {
@@ -48,7 +65,7 @@ export default function ListEntities() {
                     requirements: typeof opportunity.requirements === 'string'
                         ? opportunity.requirements.split(',').map(req => req.trim())
                         : opportunity.requirements || [],
-                    ongs: ongs.filter(ong => opportunity.ongId === ong.id) // Vincular ONGs
+                    ongs: ongs.filter(ong => opportunity.ongId === ong.id)
                 }));
                 setOpportunities(opportunitiesList);
                 setEntities(opportunitiesList);
@@ -56,14 +73,17 @@ export default function ListEntities() {
                 data = await getVolunteers();
                 const volunteersList = data.volunteers.map(volunteer => ({
                     ...volunteer,
-                    opportunities: opportunities.filter(op => volunteer.opportunityId === op.id) // Vincular Oportunidades
+                    interests: Array.isArray(volunteer.interests) ? volunteer.interests : volunteer.interests.split(',').map(i => i.trim()),
+                    opportunities: opportunities.filter(op => volunteer.opportunityId === op.id)
                 }));
+
                 setEntities(volunteersList);
             }
         } catch (error) {
             console.error(`Erro ao buscar ${entityType}:`, error.message);
         }
     };
+
 
     const handleSelectChange = (value) => {
         setSelectedEntity(value);
@@ -177,13 +197,14 @@ export default function ListEntities() {
 
                             {selectedEntity === 'volunteers' && (
                                 <>
-                                    <p><strong>Email:</strong> {entity.email}</p>
-                                    <p><strong>Telefone:</strong> {entity.phone}</p>
-                                    <p><strong>Interesses:</strong> {entity.interests?.join(', ') || 'Nenhum interesse'}</p>
-                                    <p><strong>Oportunidade Vinculada:</strong> {Array.isArray(entity.opportunities) && entity.opportunities.length > 0 ? entity.opportunities.map(op => op.title).join(', ') : 'Nenhuma oportunidade vinculada'}</p>
+                                    <p><strong>Email:</strong> {entity.email || 'Email não disponível'}</p>
+                                    <p><strong>Telefone:</strong> {entity.phone || 'Telefone não disponível'}</p>
+                                    <p><strong>Interesses:</strong> {Array.isArray(entity.interests) && entity.interests.length > 0 ? entity.interests.join(', ') : 'Nenhum interesse'}</p>
+                                    <p><strong>Oportunidade Vinculada:</strong> {entity.opportunityId ? opportunities.find(op => op.id === entity.opportunityId)?.title || 'Nenhuma oportunidade vinculada' : 'Nenhuma oportunidade vinculada'}</p>
                                     <p><strong>ONG Vinculada:</strong> {ongs.find(ong => ong.id === entity.ongId)?.name || 'Nenhuma ONG vinculada'}</p>
                                 </>
                             )}
+
                         </div>
                         <Button onClick={() => handleEdit(entity)} label="Editar" />
                         <Button onClick={() => handleDelete(entity.id)} label="Remover" />
@@ -297,13 +318,14 @@ export default function ListEntities() {
                             <label>Interesses:</label>
                             <InputField
                                 name="interests"
-                                value={editData.interests?.join(', ') || ''}
+                                value={Array.isArray(editData.interests) ? editData.interests.join(', ') : ''}
                                 onChange={(e) => setEditData({ ...editData, interests: e.target.value.split(',').map(i => i.trim()) })}
                                 placeholder="Interesses"
                             />
                         </>
                     )}
                     <Button type="submit" label="Salvar" />
+                    <Button type="button" onClick={resetEditData} label="Cancelar" />
                 </form>
             )}
         </>
