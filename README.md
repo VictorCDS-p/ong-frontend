@@ -17,18 +17,18 @@ Para rodar o frontend deste projeto corretamente, é necessário ter a API backe
 
 **Pré-requisitos**:
 - Node.js (v14 ou superior)
-- API backend em funcionamento (consulte o repositório da API [aqui](https://github.com/seuusuario/api-projeto))
+- API backend em funcionamento (consulte o repositório da API [aqui](https://github.com/VictorCDS-p/ong-api))
   
 ## Instalação
 
 1. Clone este repositório para a sua máquina local:
    ```bash
-   git clone https://github.com/seuusuario/frontend-projeto.git
+   git clone https://github.com/VictorCDS-p/ong-frontend
    ```
 
 2. Acesse o diretório do projeto:
    ```bash
-   cd frontend-projeto
+   cd ong-frontend
    ```
 
 3. Instale as dependências:
@@ -36,17 +36,17 @@ Para rodar o frontend deste projeto corretamente, é necessário ter a API backe
    npm install
    ```
 
-4. Certifique-se de que a URL da API está corretamente configurada no arquivo `.env` do frontend. Exemplo de configuração:
+4. Certifique-se de que a URL da API está corretamente configurada em `services` do frontend. Exemplo de configuração:
    ```
-   REACT_APP_API_URL=http://localhost:3000
+   API_URL = "http://localhost:3000"
    ```
 
 5. Inicie o projeto:
    ```bash
-   npm start
+   npm run dev
    ```
 
-6. O frontend será iniciado em `http://localhost:3001`, ou na porta configurada no seu ambiente.
+6. O frontend será iniciado em `http://localhost:5173/`, ou na porta configurada no seu ambiente.
 
 ## Uso
 
