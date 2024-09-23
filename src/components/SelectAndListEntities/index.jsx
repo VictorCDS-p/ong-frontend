@@ -10,31 +10,9 @@ import SelectDropdown from '../../components/SelectDropdown';
 export default function ListEntities() {
     const [selectedEntity, setSelectedEntity] = useState('');
     const [entities, setEntities] = useState([]);
-    const [editData, setEditData] = useState({ requirements: [], interests: [] });
+    const [editData, setEditData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-
-    const fetchEntities = async (entityType) => {
-        try {
-            let data = [];
-            switch (entityType) {
-                case 'ongs':
-                    data = (await getONGs()).ongList || [];
-                    break;
-                case 'opportunities':
-                    data = (await getOpportunities()).opportunities || [];
-                    break;
-                case 'volunteers':
-                    data = (await getVolunteers()).volunteers || [];
-                    break;
-                default:
-                    return;
-            }
-            setEntities(data);
-        } catch (error) {
-            console.error(`Erro ao buscar ${entityType}:`, error.message);
-        }
-    };
 
     useEffect(() => {
         if (selectedEntity) {
@@ -42,23 +20,44 @@ export default function ListEntities() {
         }
     }, [selectedEntity]);
 
+    const fetchEntities = async (entityType) => {
+        let data = [];
+        try {
+            if (entityType === 'ongs') {
+                data = await getONGs();
+                setEntities(data.ongList || []);
+            } else if (entityType === 'opportunities') {
+                data = await getOpportunities();
+                const opportunities = data.opportunities.map(opportunity => ({
+                    ...opportunity,
+                    requirements: typeof opportunity.requirements === 'string'
+                        ? opportunity.requirements.split(',').map(req => req.trim())
+                        : opportunity.requirements || []
+                }));
+                setEntities(opportunities);
+            } else if (entityType === 'volunteers') {
+                data = await getVolunteers();
+                setEntities(data.volunteers || []);
+            }
+        } catch (error) {
+            console.error(`Erro ao buscar ${entityType}:`, error.message);
+        }
+    };
+
+
     const handleSelectChange = (value) => {
         setSelectedEntity(value);
         resetEditData();
     };
 
     const resetEditData = () => {
-        setEditData({ requirements: [], interests: [] });
+        setEditData({});
         setIsEditing(false);
         setSearchTerm('');
     };
 
     const handleEdit = (entity) => {
-        setEditData({
-            ...entity,
-            requirements: Array.isArray(entity.requirements) ? entity.requirements : [],
-            interests: Array.isArray(entity.interests) ? entity.interests : [],
-        });
+        setEditData(entity);
         setIsEditing(true);
     };
 
@@ -66,81 +65,45 @@ export default function ListEntities() {
         e.preventDefault();
         if (!editData.id) return;
 
-        if (selectedEntity === 'opportunities' && editData.startDate > editData.endDate) {
-            alert('A data de início não pode ser maior que a data de término.');
-            return;
-        }
-
         try {
-            switch (selectedEntity) {
-                case 'ongs':
-                    await updateONG(editData.id, editData);
-                    break;
-                case 'opportunities':
-                    await updateOpportunity(editData.id, editData);
-                    break;
-                case 'volunteers':
-                    await updateVolunteer(editData.id, editData);
-                    break;
-                default:
+            if (selectedEntity === 'ongs') {
+                await updateONG(editData.id, editData);
+            } else if (selectedEntity === 'opportunities') {
+                if (editData.startDate > editData.endDate) {
+                    alert('A data de início não pode ser maior que a data de término.');
                     return;
+                }
+                await updateOpportunity(editData.id, editData);
+            } else if (selectedEntity === 'volunteers') {
+                await updateVolunteer(editData.id, editData);
             }
             fetchEntities(selectedEntity);
             resetEditData();
         } catch (error) {
-            console.error("Erro ao atualizar:", error.message);
+            console.error('Erro ao atualizar:', error.message);
         }
     };
 
     const handleDelete = async (id) => {
         if (!id) return;
         try {
-            switch (selectedEntity) {
-                case 'ongs':
-                    await deleteONG(id);
-                    break;
-                case 'opportunities':
-                    await deleteOpportunity(id);
-                    break;
-                case 'volunteers':
-                    await deleteVolunteer(id);
-                    break;
-                default:
-                    return;
+            if (selectedEntity === 'ongs') {
+                await deleteONG(id);
+            } else if (selectedEntity === 'opportunities') {
+                await deleteOpportunity(id);
+            } else if (selectedEntity === 'volunteers') {
+                await deleteVolunteer(id);
             }
             fetchEntities(selectedEntity);
         } catch (error) {
-            console.error("Erro ao remover:", error.message);
+            console.error('Erro ao remover:', error.message);
         }
     };
 
-    const handleCancel = () => {
-        resetEditData();
-    };
-
-    const filteredEntities = entities.filter(entity =>
-        (entity.name || entity.title || '').toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    const addRequirement = () => {
-        setEditData({ ...editData, requirements: [...editData.requirements, ''] });
-    };
-
-    const addInterest = () => {
-        setEditData({ ...editData, interests: [...editData.interests, ''] });
-    };
-
-    const handleRequirementChange = (index, value) => {
-        const newRequirements = [...editData.requirements];
-        newRequirements[index] = value;
-        setEditData({ ...editData, requirements: newRequirements });
-    };
-
-    const handleInterestChange = (index, value) => {
-        const newInterests = [...editData.interests];
-        newInterests[index] = value;
-        setEditData({ ...editData, interests: newInterests });
-    };
+    const filteredEntities = entities.filter(entity => {
+        const nameOrTitle = entity.name || entity.title || '';
+        return nameOrTitle.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
     return (
         <>
@@ -151,7 +114,7 @@ export default function ListEntities() {
                 options={[
                     { id: 'ongs', name: 'ONGs' },
                     { id: 'opportunities', name: 'Oportunidades' },
-                    { id: 'volunteers', name: 'Voluntários' },
+                    { id: 'volunteers', name: 'Voluntários' }
                 ]}
                 onChange={handleSelectChange}
                 placeholder="Selecione uma opção"
@@ -175,7 +138,9 @@ export default function ListEntities() {
                                     <p><strong>Descrição:</strong> {entity.description}</p>
                                     <p><strong>Localização:</strong> {entity.location}</p>
                                     <p><strong>Website:</strong>
-                                        <a href={entity.website?.startsWith('http') ? entity.website : `http://${entity.website}`} target="_blank" rel="noopener noreferrer"> {entity.website}</a>
+                                        <a href={entity.website?.startsWith('http') ? entity.website : `http://${entity.website}`} target="_blank" rel="noopener noreferrer">
+                                            {entity.website}
+                                        </a>
                                     </p>
                                     <p><strong>Email de Contato:</strong> {entity.contactEmail}</p>
                                 </>
@@ -185,17 +150,14 @@ export default function ListEntities() {
                                     <p><strong>Descrição:</strong> {entity.description}</p>
                                     <p><strong>Data de Início:</strong> {entity.startDate}</p>
                                     <p><strong>Data de Término:</strong> {entity.endDate}</p>
-                                    <p><strong>Requisitos:</strong> {Array.isArray(entity.requirements) && entity.requirements.length > 0
-                                        ? entity.requirements.join(', ')
-                                        : 'Nenhum requisito'}
-                                    </p>
+                                    <p><strong>Requisitos:</strong> {(Array.isArray(entity.requirements) && entity.requirements.length > 0) ? entity.requirements.join(', ') : 'Nenhum requisito'}</p>
                                 </>
                             )}
                             {selectedEntity === 'volunteers' && (
                                 <>
                                     <p><strong>Email:</strong> {entity.email}</p>
                                     <p><strong>Telefone:</strong> {entity.phone}</p>
-                                    <p><strong>Interesses:</strong> {Array.isArray(entity.interests) && entity.interests.length > 0 ? entity.interests.join(', ') : 'Nenhum interesse'}</p>
+                                    <p><strong>Interesses:</strong> {entity.interests?.join(', ') || 'Nenhum interesse'}</p>
                                 </>
                             )}
                         </div>
@@ -215,7 +177,6 @@ export default function ListEntities() {
                                 value={editData.name || ''}
                                 onChange={(e) => setEditData({ ...editData, name: e.target.value })}
                                 placeholder="Nome"
-                                autoComplete="off"
                             />
                             <label>Descrição:</label>
                             <InputField
@@ -223,7 +184,6 @@ export default function ListEntities() {
                                 value={editData.description || ''}
                                 onChange={(e) => setEditData({ ...editData, description: e.target.value })}
                                 placeholder="Descrição"
-                                autoComplete="off"
                             />
                             <label>Localização:</label>
                             <InputField
@@ -231,7 +191,6 @@ export default function ListEntities() {
                                 value={editData.location || ''}
                                 onChange={(e) => setEditData({ ...editData, location: e.target.value })}
                                 placeholder="Localização"
-                                autoComplete="off"
                             />
                             <label>Website:</label>
                             <InputField
@@ -239,7 +198,6 @@ export default function ListEntities() {
                                 value={editData.website || ''}
                                 onChange={(e) => setEditData({ ...editData, website: e.target.value })}
                                 placeholder="Website"
-                                autoComplete="off"
                             />
                             <label>Email de Contato:</label>
                             <InputField
@@ -247,7 +205,6 @@ export default function ListEntities() {
                                 value={editData.contactEmail || ''}
                                 onChange={(e) => setEditData({ ...editData, contactEmail: e.target.value })}
                                 placeholder="Email de Contato"
-                                autoComplete="email"
                             />
                         </>
                     )}
@@ -260,7 +217,6 @@ export default function ListEntities() {
                                 value={editData.title || ''}
                                 onChange={(e) => setEditData({ ...editData, title: e.target.value })}
                                 placeholder="Título"
-                                autoComplete="off"
                             />
                             <label>Descrição:</label>
                             <InputField
@@ -268,35 +224,50 @@ export default function ListEntities() {
                                 value={editData.description || ''}
                                 onChange={(e) => setEditData({ ...editData, description: e.target.value })}
                                 placeholder="Descrição"
-                                autoComplete="off"
                             />
                             <label>Data de Início:</label>
-                            <InputField
+                            <input
                                 type="date"
                                 name="startDate"
                                 value={editData.startDate || ''}
-                                onChange={(e) => setEditData({ ...editData, startDate: e.target.value })}
-                                placeholder="Data de Início"
+                                onChange={(e) => {
+                                    const newStartDate = e.target.value;
+                                    if (new Date(newStartDate) > new Date(editData.endDate)) {
+                                        alert('A data de início não pode ser maior que a data de término.');
+                                    } else {
+                                        setEditData({ ...editData, startDate: newStartDate });
+                                    }
+                                }}
                             />
+
                             <label>Data de Término:</label>
-                            <InputField
+                            <input
                                 type="date"
                                 name="endDate"
                                 value={editData.endDate || ''}
-                                onChange={(e) => setEditData({ ...editData, endDate: e.target.value })}
-                                placeholder="Data de Término"
+                                onChange={(e) => {
+                                    const newEndDate = e.target.value;
+                                    if (new Date(newEndDate) < new Date(editData.startDate)) {
+                                        alert('A data de término não pode ser menor que a data de início.');
+                                    } else {
+                                        setEditData({ ...editData, endDate: newEndDate });
+                                    }
+                                }}
                             />
                             <label>Requisitos:</label>
-                            {editData.requirements.map((req, index) => (
+                            {editData.requirements?.map((req, index) => (
                                 <InputField
                                     key={index}
                                     name={`requirement-${index}`}
                                     value={req}
-                                    onChange={(e) => handleRequirementChange(index, e.target.value)}
+                                    onChange={(e) => {
+                                        const newRequirements = [...editData.requirements];
+                                        newRequirements[index] = e.target.value;
+                                        setEditData({ ...editData, requirements: newRequirements });
+                                    }}
                                     placeholder={`Requisito ${index + 1}`}
                                 />
                             ))}
-                            <Button onClick={addRequirement} label="Adicionar Requisito" />
                         </>
                     )}
 
@@ -308,7 +279,6 @@ export default function ListEntities() {
                                 value={editData.name || ''}
                                 onChange={(e) => setEditData({ ...editData, name: e.target.value })}
                                 placeholder="Nome"
-                                autoComplete="off"
                             />
                             <label>Email:</label>
                             <InputField
@@ -316,7 +286,6 @@ export default function ListEntities() {
                                 value={editData.email || ''}
                                 onChange={(e) => setEditData({ ...editData, email: e.target.value })}
                                 placeholder="Email"
-                                autoComplete="email"
                             />
                             <label>Telefone:</label>
                             <InputField
@@ -326,25 +295,28 @@ export default function ListEntities() {
                                 placeholder="Telefone"
                             />
                             <label>Interesses:</label>
-                            {editData.interests.map((interest, index) => (
+                            {editData.interests?.map((interest, index) => (
                                 <InputField
                                     key={index}
                                     name={`interest-${index}`}
                                     value={interest}
-                                    onChange={(e) => handleInterestChange(index, e.target.value)}
+                                    onChange={(e) => {
+                                        const newInterests = [...editData.interests];
+                                        newInterests[index] = e.target.value;
+                                        setEditData({ ...editData, interests: newInterests });
+                                    }}
                                     placeholder={`Interesse ${index + 1}`}
                                 />
                             ))}
-                            <Button onClick={addInterest} label="Adicionar Interesse" />
                         </>
                     )}
 
-                    <div className="formActions">
-                        <Button type="submit" label="Salvar" />
-                        <Button onClick={handleCancel} label="Cancelar" />
-                    </div>
+                    <Button type="submit" label="Salvar" />
+                    <Button type="button" label="Cancelar" onClick={resetEditData} />
                 </form>
             )}
+
+
         </>
     );
 }
