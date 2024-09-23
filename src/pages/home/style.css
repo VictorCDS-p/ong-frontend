@@ -2,10 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* background-color: #f0f0f0; */
-
-
-} 
+}
 
 .mainContent {
     display: flex;
@@ -14,15 +11,12 @@
     margin-bottom: 20px auto;
 }
 
-
 .textContent {
     padding: 100px; 
-    max-width: 650px
-    
-
+    max-width: 650px;
 }
 
-.textContent, h1, p, li{
+.textContent, h1, p, li {
     text-align: left;
 }
 
@@ -69,10 +63,9 @@
     margin-left: 20px;
 }
 
-.mainContent .imageContent img{
+.mainContent .imageContent img {
     width: 120vh;
     margin-right: 50px;
-    
 }
 
 .infoSection {
@@ -85,8 +78,6 @@
     justify-content: center; 
     align-items: center; 
     text-align: center;
-    /* background-color: #f0f0f0; */
-
 }
 
 .infoSection h2 {
@@ -108,13 +99,11 @@
 
 .cardsContainer {
     padding: 60px 20px; 
-    /* background-color: #f9f9f9;  */
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin: 30px auto ;
-
+    margin: 30px auto;
 }
 
 .cardsContainer .title {
@@ -183,7 +172,6 @@
     width: 100%;
     margin: 40px auto;
     padding: 40px;
-    /* background-color: #f0f0f0; */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     display: flex;
@@ -239,82 +227,80 @@
 .forms {
     transition: opacity 0.3s ease, transform 0.3s ease;
     opacity: 0;
-    transform: translateY(20px); /* Desloca os formulários para baixo */
-    visibility: hidden; /* Esconde os formulários inicialmente */
+    transform: translateY(20px);
+    visibility: hidden;
 }
 
 .forms.visible {
     opacity: 1;
-    transform: translateY(0); /* Restaura a posição original */
-    visibility: visible; /* Torna os formulários visíveis */
+    transform: translateY(0);
+    visibility: visible;
 }
-
-/* Media Queries para Responsividade */
 
 @media (max-width: 768px) {
     .mainContent {
-        flex-direction: column; /* Coloca os elementos em coluna em telas menores */
-        align-items: center; /* Centraliza os elementos */
+        flex-direction: column;
+        align-items: center;
     }
 
     .textContent {
-        padding: 20px; /* Reduz o padding para telas menores */
-        max-width: 100%; /* Permite que ocupe toda a largura disponível */
+        padding: 20px;
+        max-width: 100%;
     }
 
     .mainContent .imageContent img {
-        width: 100%; /* Faz a imagem ocupar 100% da largura do contêiner */
-        margin-right: 0; /* Remove a margem à direita */
+        width: 100%;
+        margin-right: 0;
     }
 
     .infoSection {
-        padding: 40px 20px; /* Reduz o padding */
-        min-height: auto; /* Remove a altura mínima em telas pequenas */
+        padding: 40px 20px;
+        min-height: auto;
     }
 
     .cardsContainer {
-        padding: 40px 20px; /* Reduz o padding */
-        flex-direction: column; /* Muda para coluna */
+        padding: 40px 20px;
+        flex-direction: column;
     }
 
     .cardsContent .card {
-        width: 100%; /* Faz os cards ocuparem toda a largura */
-        max-width: 300px; /* Limita a largura máxima dos cards */
+        width: 100%;
+        max-width: 300px;
     }
 
     .forms {
-        width: 90%; /* Aumenta a largura dos formulários */
-        padding: 20px; /* Reduz o padding */
+        width: 90%;
+        padding: 20px;
     }
 }
 
 @media (max-width: 480px) {
     .textContent h1 {
-        font-size: 28px; /* Reduz o tamanho da fonte do título */
+        font-size: 28px;
     }
 
     .textContent p {
-        font-size: 16px; /* Reduz o tamanho da fonte do parágrafo */
+        font-size: 16px;
     }
 
     .infoSection h2 {
-        font-size: 28px; /* Reduz o tamanho da fonte do subtítulo */
+        font-size: 28px;
     }
 
     .infoSection p {
-        font-size: 18px; /* Reduz o tamanho da fonte do parágrafo */
+        font-size: 18px;
     }
 
     .cardsContainer .title h1 {
-        font-size: 28px; /* Reduz o tamanho da fonte do título dos cards */
+        font-size: 28px;
     }
 
     .forms h2 {
-        font-size: 24px; /* Reduz o tamanho da fonte do título do formulário */
+        font-size: 24px;
     }
 
     .forms .inputField,
     .forms .button {
-        font-size: 14px; /* Reduz o tamanho da fonte dos inputs e botões */
+        font-size: 14px;
     }
 }

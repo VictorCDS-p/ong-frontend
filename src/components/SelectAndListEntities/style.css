@@ -7,7 +7,7 @@
 .entitiesContainer {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Espaçamento entre os cards */
+    gap: 20px;
 }
 
 .entityCard {
@@ -19,29 +19,29 @@
     padding: 20px;
     margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease; /* Transições para sombra */
-    flex: 1 1 calc(30% - 20px); /* Ajusta a largura para 30% da tela */
-    min-width: 200px; /* Define uma largura mínima */
-    max-width: 300px; /* Limite de largura máxima */
-    min-height: 250px; /* Altura mínima para os cards */
-    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura/altura */
-    overflow: hidden; /* Impede o transbordamento de conteúdo */
+    transition: box-shadow 0.3s ease;
+    flex: 1 1 calc(30% - 20px);
+    min-width: 200px;
+    max-width: 300px;
+    min-height: 250px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .entityCard.expanded {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao expandir */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .entityCard h2 {
-    font-size: 1.25rem; /* Tamanho do texto do título */
-    line-height: 1.2; /* Altura da linha para espaçamento */
-    color: #5b8284; /* Cor dos títulos */
-    margin-bottom: 10px; /* Espaçamento inferior */
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: #5b8284;
+    margin-bottom: 10px;
 }
 
 .entityDetails {
     margin-top: 10px;
-    font-size: 0.9rem; /* Tamanho de fonte menor para detalhes */
+    font-size: 0.9rem;
 }
 
 button {
@@ -64,32 +64,29 @@ button:hover {
     background-color: #e0a93f;
 }
 
-/* Estilos para inputs do tipo date */
 input[type="date"] {
     padding: 10px;
-    border: 1px solid #ccc; /* Borda cinza clara */
-    border-radius: 4px; /* Bordas arredondadas */
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 16px;
-    transition: border-color 0.3s; /* Efeito de transição ao focar */
-    width: 100%; /* Ocupa toda a largura do container */
-    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+    transition: border-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Estilo ao focar nos inputs de data */
 input[type="date"]:focus {
-    border-color: #fbb646; /* Borda do calendário ao focar */
-    outline: none; /* Remove a borda padrão do navegador */
+    border-color: #fbb646;
+    outline: none;
 }
 
-/* Estilizando o label associado ao input */
 label {
     font-weight: bold;
-    margin-bottom: 5px; /* Espaçamento abaixo do label */
-    display: block; /* Garante que o label ocupe uma linha inteira */
+    margin-bottom: 5px;
+    display: block;
 }
 
 form {
-    margin-top: 50px; /* Aumenta o espaçamento acima do formulário */
+    margin-top: 50px;
 }
 
 label {
@@ -102,25 +99,24 @@ label {
 }
 
 a {
-    color: #5b8284; /* Cor padrão do link */
-    text-decoration: none; /* Remove o sublinhado do link */
-    transition: color 0.3s ease; /* Transição suave ao passar o mouse */
+    color: #5b8284;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #2a94d9; /* Cor do link ao passar o mouse */
-    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+    color: #2a94d9;
+    text-decoration: underline;
 }
-
 
 @media (max-width: 768px) {
     .entityCard {
-        flex: 1 1 calc(100% - 20px); /* 100% em telas menores */
+        flex: 1 1 calc(100% - 20px);
     }
 }
 
 @media (min-width: 769px) {
     .entityCard {
-        flex: 1 1 calc(30% - 20px); /* 30% em telas maiores */
+        flex: 1 1 calc(30% - 20px);
     }
 }

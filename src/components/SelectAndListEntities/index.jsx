@@ -54,7 +54,6 @@ export default function ListEntities() {
     };
 
     const handleEdit = (entity) => {
-        console.log("Entidade sendo editada:", entity); // Adicionado para depuração
         setEditData({
             ...entity,
             requirements: entity.requirements || [],
@@ -88,7 +87,6 @@ export default function ListEntities() {
                 default:
                     return;
             }
-            console.log("Atualização bem-sucedida:", response);
             fetchEntities(selectedEntity);
             resetEditData();
         } catch (error) {
@@ -113,7 +111,6 @@ export default function ListEntities() {
                 default:
                     return;
             }
-            console.log("Remoção bem-sucedida:", response);
             fetchEntities(selectedEntity);
         } catch (error) {
             console.error("Erro ao remover:", error.message);

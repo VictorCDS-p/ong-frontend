@@ -3,12 +3,12 @@ import React, { useState, useRef } from 'react';
 import Header from "../../components/header";
 import Button from "../../components/button";
 import Card from "../../components/card";
-import mainImg from '../../assets/mainimg.png';
 import Footer from "../../components/footer";
 import ONGForm from "../../components/ONGForm";
 import VolunteerForm from "../../components/volunteerForm";
 import OpportunityForm from "../../components/opportunityForm";
 import SelectAndListEntities from "../../components/SelectAndListEntities";
+import mainImg from '../../assets/mainimg.png';
 
 export default function Home() {
     const infoSectionRef = useRef(null);
@@ -58,22 +58,22 @@ export default function Home() {
                     <img src={mainImg} alt="Voluntariado" />
                 </div>
             </div>
-
             <div className="infoSection" ref={infoSectionRef}>
-                <h2>Sobre o Projeto</h2>
+                <h2>Sobre o Sistema de Gerenciamento</h2>
                 <p>
-                    Este site foi criado com o objetivo de facilitar a conexão entre pessoas que desejam se voluntariar e ONGs que buscam por ajuda. Muitas vezes, há uma grande quantidade de oportunidades de voluntariado disponíveis, mas as pessoas não sabem onde procurar, ou como encontrar uma organização que esteja alinhada com seus interesses e habilidades.
+                    Este sistema foi desenvolvido para simplificar o gerenciamento de ONGs, voluntários e oportunidades de voluntariado. A plataforma permite que organizações tenham um controle eficiente de suas atividades, desde o cadastro de novas iniciativas até o acompanhamento de voluntários e suas contribuições.
                 </p>
                 <p>
-                    Com essa plataforma, acreditamos que podemos criar um ponto de encontro digital, onde ONGs podem listar suas necessidades de voluntários, e indivíduos podem explorar essas oportunidades de maneira simples e intuitiva. Através do nosso sistema, você poderá descobrir ONGs em sua região ou em qualquer lugar do mundo, entender quais causas elas apoiam, e se candidatar a projetos que façam sentido para você.
+                    Através do nosso sistema, ONGs podem criar e organizar suas oportunidades de forma centralizada, garantindo que todas as suas necessidades de voluntariado sejam visíveis e acessíveis a potenciais colaboradores. Além disso, voluntários podem se inscrever diretamente nas oportunidades de interesse, facilitando o processo de engajamento.
                 </p>
                 <p>
-                    O voluntariado não é apenas uma forma de ajudar os outros, mas também uma oportunidade de crescimento pessoal. Você poderá adquirir novas habilidades, conhecer novas pessoas, e se envolver em causas importantes para a sociedade. Quer seja na área de educação, meio ambiente, saúde ou direitos humanos, sempre há algo que você pode fazer para contribuir.
+                    O sistema também oferece recursos para monitorar o progresso das atividades e avaliar o impacto gerado pelas contribuições dos voluntários. Com ferramentas integradas de gestão, as ONGs podem otimizar a alocação de recursos e gerenciar equipes com mais precisão.
                 </p>
                 <p>
-                    Nosso sistema permite que você gerencie suas inscrições, acompanhe seu impacto e receba feedback das ONGs. Queremos tornar o processo de voluntariado acessível e eficiente, criando uma ponte entre pessoas e organizações, e, assim, ajudar a construir um mundo melhor para todos.
+                    Nosso objetivo é fornecer uma solução prática e intuitiva para o gerenciamento de ONGs e projetos de voluntariado, permitindo que tanto organizações quanto voluntários possam focar no que realmente importa: gerar impacto positivo em causas sociais relevantes.
                 </p>
             </div>
+
 
             <div className="cardsContainer" ref={resourcesSectionRef}>
                 <div className="title">
