@@ -82,13 +82,13 @@ Para mais detalhes sobre como configurar e utilizar a API, consulte a documenta�
 Aqui estão algumas imagens de exemplo do projeto rodando:
 
 ### Página Inicial
-![Página Inicial](./src/assets/apresentacao1.gif)
+![Página Inicial](./src/assets/apresentacao3.gif)
 
 ### Listagem de ONGs
 ![Listagem de ONGs](./src/assets/apresentacao2.gif)
 
 ### Formulário de Cadastro de Oportunidades
-![Cadastro de Oportunidades](./src/assets/apresentacao3.gif)
+![Cadastro de Oportunidades](./src/assets/apresentacao1.gif)
 
 > **Nota**: Substitua as imagens acima pelas capturas de tela reais do projeto.
 
