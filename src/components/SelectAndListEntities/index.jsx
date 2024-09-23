@@ -56,12 +56,11 @@ export default function ListEntities() {
     const handleEdit = (entity) => {
         setEditData({
             ...entity,
-            requirements: entity.requirements || [],
-        
+            requirements: Array.isArray(entity.requirements) ? entity.requirements : [],
+            interests: Array.isArray(entity.interests) ? entity.interests : [],
         });
         setIsEditing(true);
     };
-
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -73,16 +72,15 @@ export default function ListEntities() {
         }
 
         try {
-            let response;
             switch (selectedEntity) {
                 case 'ongs':
-                    response = await updateONG(editData.id, editData);
+                    await updateONG(editData.id, editData);
                     break;
                 case 'opportunities':
-                    response = await updateOpportunity(editData.id, editData);
+                    await updateOpportunity(editData.id, editData);
                     break;
                 case 'volunteers':
-                    response = await updateVolunteer(editData.id, editData);
+                    await updateVolunteer(editData.id, editData);
                     break;
                 default:
                     return;
@@ -97,16 +95,15 @@ export default function ListEntities() {
     const handleDelete = async (id) => {
         if (!id) return;
         try {
-            let response;
             switch (selectedEntity) {
                 case 'ongs':
-                    response = await deleteONG(id);
+                    await deleteONG(id);
                     break;
                 case 'opportunities':
-                    response = await deleteOpportunity(id);
+                    await deleteOpportunity(id);
                     break;
                 case 'volunteers':
-                    response = await deleteVolunteer(id);
+                    await deleteVolunteer(id);
                     break;
                 default:
                     return;
@@ -124,6 +121,26 @@ export default function ListEntities() {
     const filteredEntities = entities.filter(entity =>
         (entity.name || entity.title || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const addRequirement = () => {
+        setEditData({ ...editData, requirements: [...editData.requirements, ''] });
+    };
+
+    const addInterest = () => {
+        setEditData({ ...editData, interests: [...editData.interests, ''] });
+    };
+
+    const handleRequirementChange = (index, value) => {
+        const newRequirements = [...editData.requirements];
+        newRequirements[index] = value;
+        setEditData({ ...editData, requirements: newRequirements });
+    };
+
+    const handleInterestChange = (index, value) => {
+        const newInterests = [...editData.interests];
+        newInterests[index] = value;
+        setEditData({ ...editData, interests: newInterests });
+    };
 
     return (
         <>
@@ -168,19 +185,17 @@ export default function ListEntities() {
                                     <p><strong>Descrição:</strong> {entity.description}</p>
                                     <p><strong>Data de Início:</strong> {entity.startDate}</p>
                                     <p><strong>Data de Término:</strong> {entity.endDate}</p>
-                                    <p><strong>Requisitos: </strong>
-                                        {Array.isArray(entity.requirements) && entity.requirements.length > 0
-                                            ? entity.requirements.join(', ')
-                                            : 'Nenhum requisito'}
+                                    <p><strong>Requisitos:</strong> {Array.isArray(entity.requirements) && entity.requirements.length > 0
+                                        ? entity.requirements.join(', ')
+                                        : 'Nenhum requisito'}
                                     </p>
                                 </>
                             )}
                             {selectedEntity === 'volunteers' && (
                                 <>
-                                    <p><strong>Email: </strong> {entity.email}</p>
-                                    <p><strong>Telefone: </strong> {entity.phone}</p>
-                                    <p><strong>Interesses: </strong>{entity.interests}
-                                    </p>
+                                    <p><strong>Email:</strong> {entity.email}</p>
+                                    <p><strong>Telefone:</strong> {entity.phone}</p>
+                                    <p><strong>Interesses:</strong> {Array.isArray(entity.interests) && entity.interests.length > 0 ? entity.interests.join(', ') : 'Nenhum interesse'}</p>
                                 </>
                             )}
                         </div>
@@ -255,20 +270,13 @@ export default function ListEntities() {
                                 placeholder="Descrição"
                                 autoComplete="off"
                             />
-                            <label>Localização:</label>
-                            <InputField
-                                name="location"
-                                value={editData.location || ''}
-                                onChange={(e) => setEditData({ ...editData, location: e.target.value })}
-                                placeholder="Localização"
-                                autoComplete="off"
-                            />
                             <label>Data de Início:</label>
                             <InputField
                                 type="date"
                                 name="startDate"
                                 value={editData.startDate || ''}
                                 onChange={(e) => setEditData({ ...editData, startDate: e.target.value })}
+                                placeholder="Data de Início"
                             />
                             <label>Data de Término:</label>
                             <InputField
@@ -276,15 +284,19 @@ export default function ListEntities() {
                                 name="endDate"
                                 value={editData.endDate || ''}
                                 onChange={(e) => setEditData({ ...editData, endDate: e.target.value })}
+                                placeholder="Data de Término"
                             />
                             <label>Requisitos:</label>
-                            <InputField
-                                name="requirements"
-                                value={editData.requirements.join(', ') || ''}
-                                onChange={(e) => setEditData({ ...editData, requirements: e.target.value.split(',').map(req => req.trim()) })}
-                                placeholder="Requisitos (separe por vírgula)"
-                                autoComplete="off"
-                            />
+                            {editData.requirements.map((req, index) => (
+                                <InputField
+                                    key={index}
+                                    name={`requirement-${index}`}
+                                    value={req}
+                                    onChange={(e) => handleRequirementChange(index, e.target.value)}
+                                    placeholder={`Requisito ${index + 1}`}
+                                />
+                            ))}
+                            <Button onClick={addRequirement} label="Adicionar Requisito" />
                         </>
                     )}
 
@@ -312,21 +324,25 @@ export default function ListEntities() {
                                 value={editData.phone || ''}
                                 onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
                                 placeholder="Telefone"
-                                autoComplete="off"
                             />
                             <label>Interesses:</label>
-                            <InputField
-                                name="interests"
-                                value={editData.interests || ''}
-                                onChange={(e) => setEditData({ ...editData, interests: e.target.value.split(',').map(interest => interest.trim()) })}
-                                placeholder="Interesses (separe por vírgula)"
-                                autoComplete="off"
-                            />
+                            {editData.interests.map((interest, index) => (
+                                <InputField
+                                    key={index}
+                                    name={`interest-${index}`}
+                                    value={interest}
+                                    onChange={(e) => handleInterestChange(index, e.target.value)}
+                                    placeholder={`Interesse ${index + 1}`}
+                                />
+                            ))}
+                            <Button onClick={addInterest} label="Adicionar Interesse" />
                         </>
                     )}
 
-                    <Button type="submit" label="Salvar" />
-                    <Button onClick={handleCancel} label="Cancelar" />
+                    <div className="formActions">
+                        <Button type="submit" label="Salvar" />
+                        <Button onClick={handleCancel} label="Cancelar" />
+                    </div>
                 </form>
             )}
         </>
