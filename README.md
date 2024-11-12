@@ -1,4 +1,3 @@
-Here is the translation of your README to English:
 
 # NGOs, Volunteers, and Opportunities Management
 
