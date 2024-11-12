@@ -88,5 +88,3 @@ Here are some example images of the project in action:
 
 ### NGO Listing
 ![Opportunity Registration](./src/assets/apresentacao1.gif)
-
-This translated version maintains the structure and essence of your original README.
